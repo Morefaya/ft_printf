@@ -14,9 +14,18 @@
 # define FT_PRINTF_H
 
 # include "libft.h"
+# include <stdarg.h>
 
 typedef union	u_conv
 {
-}				t_conv
+	char	a;
+	short	b;
+	int	c;
+	long	d;
+	float	e;
+	double	f;
+	char	*g;
+}		t_conv;
+
 
 #endif
