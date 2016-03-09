@@ -13,6 +13,7 @@
 #include "ft_printf.h"
 #include <stdio.h>
 #include <unistd.h>
+#include <stdint.h>
 
 /*static void	ft_printf_1(const char *format, ...)
 {
@@ -35,33 +36,28 @@ static void	get_type(const char *str, va_list ap)
 
 	if (*str == 'd' || *str == 'i')
 	{
-		tmp.c = va_arg(ap, int);
-		ft_putnbr(tmp.c);
+		tmp.s_int = va_arg(ap, int);
+		ft_putnbr(tmp.s_int);
 	}
 	else if (*str == 'o' || *str == 'u' || *str == 'x' || *str == 'X')
 	{
-		tmp.g = va_arg(ap, char*);
-		ft_putstr(tmp.g);
-	}
-	else if (*str == 'e' || *str == 'E')
-	{
-		
-	}
-	else if (*str == 'f' || *str == 'F')
-	{
-
-	}
-	else if (*str == 'g' || *str == 'G')
-	{
-
-	}
-	else if (*str == 'a' || *str == 'A')
-	{
-
+		tmp.u_int = va_arg(ap, unsigned int);
+		ft_putnbr(tmp.u_int);
 	}
 	else if (*str == 's' || *str == 'S')
 	{
-
+		tmp.s_type = (char*)va_arg(ap, const char*);
+		ft_putstr(tmp.s_type);
+	}
+	else if (*str == 'p')
+	{
+		tmp.v_type = va_arg(ap, void*);
+		ft_putnbr((int)tmp.v_type);
+	}
+	else if (*str == 'c' || *str == 'C')
+	{
+		tmp.c_type = (unsigned char)va_arg(ap, int);
+		ft_putchar(tmp.c_type);
 	}
 }
 
@@ -102,6 +98,8 @@ int	main(void)
 	ft_putnbr(ft_printf_2(str, 123, 456, "kicking my ass"));
 	ft_putchar('\t');
 	ft_putnbr(ft_strlen(str));
+	ft_putchar('\n');
+	ft_putnbr(sizeof(int64_t));
 	ft_putchar('\n');
 	/*printf("%p\n", str);
 	ft_printf_1("hello", "its", "me", "I", "was", "wondering", NULL);*/
