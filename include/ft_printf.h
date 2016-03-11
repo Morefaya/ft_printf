@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/05 14:25:50 by jcazako           #+#    #+#             */
-/*   Updated: 2016/03/11 10:42:03 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/03/11 14:52:28 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,6 @@ typedef union		u_conv
 	void			*v_type;
 }					t_conv;
 
-typedef struct		s_opt
-{
-	int				attri;
-	int				width;
-	int				presi;
-	int				m_len;
-}					t_opt;
-
 typedef struct		s_attr
 {
 	int				diez;
@@ -46,5 +38,18 @@ typedef struct		s_attr
 	int				plus;
 	int				space;
 }					t_attr;
+
+typedef struct		s_opt
+{
+	t_attr			attri;
+	int				width;
+	int				presi;
+	char			m_len;
+}					t_opt;
+
+void	get_attrib(const char **str, t_attr *att);
+void	parse_width(const char **format, t_opt *opt);
+void	print_nbr(t_conv conv, t_opt opt);
+void	print_str(t_conv conv, t_opt opt);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/05 11:30:13 by jcazako           #+#    #+#             */
-/*   Updated: 2016/03/11 10:58:45 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/03/11 14:55:36 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,14 @@
 static void	get_type(const char **str, va_list ap)
 {
 	t_conv	tmp;
+	t_opt	opt;
 
+	get_attrib(str, &(opt.attri));
+	parse_width(str, &opt);
 	if (**str == 'd' || **str == 'i')
 	{
 		tmp.s_int = va_arg(ap, int);
-		ft_putnbr(tmp.s_int);
+		print_nbr(tmp, opt);
 	}
 	else if (**str == 'o' || **str == 'u' || **str == 'x' || **str == 'X')
 	{
@@ -46,7 +49,7 @@ static void	get_type(const char **str, va_list ap)
 	else if (**str == 's' || **str == 'S')
 	{
 		tmp.s_type = va_arg(ap, const char*);
-		ft_putstr(tmp.s_type);
+		print_str(tmp, opt);
 	}
 	else if (**str == 'p')
 	{
@@ -94,10 +97,10 @@ static int	ft_printf_2(const char *format, ...)
 
 int	main(void)
 {
-	char *str = "hello %d its me %d i was wondering if %s all\n";
+	char *str = "hello %010d its me %10d i was wondering if %-10s all\n";
 
-	ft_printf_2(str, 123, 456, "after");
-	printf("%d\n", 10123);
+	ft_printf_2(str, 789, -456, "after");
+	printf(str, 789, -456, "after");
 	/*ft_printf_1("hello", "its", "me", "I", "was", "wondering", NULL);*/
 	return (0);
 }
