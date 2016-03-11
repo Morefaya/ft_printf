@@ -1,34 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_width.c                                      :+:      :+:    :+:   */
+/*   parse_pres.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/03/11 11:42:37 by jcazako           #+#    #+#             */
-/*   Updated: 2016/03/11 17:47:39 by jcazako          ###   ########.fr       */
+/*   Created: 2016/03/11 17:12:11 by jcazako           #+#    #+#             */
+/*   Updated: 2016/03/11 17:23:39 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	parse_width(const char **format, t_opt *opt)
+void	parse_pres(const char **format);
 {
-	int	width;
-
-	width = 0;
-	if (ft_check_charset(**format, "-123456789"))
-	{
-		width = ft_atoi(*format);
-		if (width < 0)
-		{
-			opt->attri.moins = 1;
-			width *= -1;
-
-		}
-		(*format) += ft_size_base(width, 10);
-		opt->width = width;
-	}
-	else
-		opt->width = 0;
+	if (**format == '.')
+		(*format)++;
 }
