@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/05 11:30:13 by jcazako           #+#    #+#             */
-/*   Updated: 2016/03/11 18:12:04 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/03/11 18:28:12 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static void	get_type(const char **str, va_list ap)
 
 	get_attrib(str, &(opt.attri));
 	parse_width(str, &opt);
+	parse_pres(str, &opt);
 	if (**str == 'd' || **str == 'i')
 	{
 		tmp.s_int = va_arg(ap, int);
@@ -97,7 +98,7 @@ static int	ft_printf_2(const char *format, ...)
 
 int	main(void)
 {
-	char *str = "hello %0-14d its me %15d i was wondering if %-10s all\n";
+	char *str = "hello %0-14.12d its me %15d i was wondering if %-10s all\n";
 
 	ft_printf_2(str, 789, -456, "after");
 	printf(str, 789, -456, "after");
