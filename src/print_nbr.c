@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/11 13:30:19 by jcazako           #+#    #+#             */
-/*   Updated: 2016/03/11 20:34:45 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/03/12 20:48:10 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	print_space(t_conv conv, t_opt opt, int i)
 			ft_putchar(' ');
 }
 
-static int	nbrlen(t_conv conv, t)
+static int	nbrlen(t_conv conv, t_opt opt)
 {
 	int	len;
 
@@ -50,7 +50,7 @@ static int	nbrlen(t_conv conv, t)
 	if (opt.presi > len)
 		return (opt.presi);
 	else
-		reyurn (++len);
+		return (++len);
 }
 
 static void	print_right_space(t_conv conv, t_opt opt)
@@ -60,7 +60,7 @@ static void	print_right_space(t_conv conv, t_opt opt)
 	int	len;
 
 	len = nbrlen(conv.s_int);
-	size = conv.width - pres;
+	size = conv.width - opt.presi;
 	while (size-- > 0)
 		ftputchar(' ');
 
