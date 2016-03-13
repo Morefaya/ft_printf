@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/11 13:30:19 by jcazako           #+#    #+#             */
-/*   Updated: 2016/03/13 17:32:13 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/03/13 17:51:01 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,18 @@ static int	nbrlen(t_conv conv, t_opt opt)
 
 static void	print_space(t_conv conv, t_opt opt)
 {
-	int	size;
+	int		size;
+	char	ch;
 
+	ch = ' ';
 	size = opt.width - nbrlen(conv, opt);
 	if (conv.s_int < 0)
 		size--;
+	if (opt.attri.zero && !opt.attri.moins)
+		ch = '0';
 	while (size > 0)
 	{
-		ft_putchar(' ');
+		ft_putchar(ch);
 		size--;
 	}
 }
