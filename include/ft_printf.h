@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/05 14:25:50 by jcazako           #+#    #+#             */
-/*   Updated: 2016/03/13 18:10:21 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/03/13 20:54:09 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,6 @@ void				get_attrib(const char **str, t_attr *att);
 void				parse_width(const char **format, t_opt *opt);
 void				print_nbr(t_conv conv, t_opt opt);
 void				print_str(t_conv conv, t_opt opt);
-void				parse_pres(const char **format, t_opt *opt, va_list ap);
+void				parse_pres(const char **format, t_opt *opt);
 
 #endif
