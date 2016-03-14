@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/05 14:25:50 by jcazako           #+#    #+#             */
-/*   Updated: 2016/03/13 20:54:09 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/03/14 22:17:11 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdarg.h>
 
 # define ATTR "#0-+ "
+# define CONV "sSpdDioOuUxXcC"
 
 typedef union		u_conv
 {
@@ -47,7 +48,7 @@ typedef struct		s_opt
 	char			m_len;
 }					t_opt;
 
-void				get_attrib(const char **str, t_attr *att);
+void				parse_attr(const char **str, t_attr *att);
 void				parse_width(const char **format, t_opt *opt);
 void				print_nbr(t_conv conv, t_opt opt);
 void				print_str(t_conv conv, t_opt opt);

@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/05 11:30:13 by jcazako           #+#    #+#             */
-/*   Updated: 2016/03/13 22:34:58 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/03/14 22:31:33 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,28 @@
 	}
 	va_end(ap);
 }*/
-/*
+
+static void	bzero_attr(t_opt *opt)
+{
+	opt->attri.diez = 0;
+	opt->attri.zero = 0;
+	opt->attri.moins = 0;
+	opt->attri.plus = 0;
+	opt->attri.space = 0;
+}
+
 static void	get_type(const char **str, va_list ap)
 {
 	t_conv	tmp;
 	t_opt	opt;
 
-	get_attrib(str, &(opt.attri));
-	parse_width(str, &opt);
-	parse_pres(str, &opt);
+	bzero_attr(&opt);
+	while (!ft_check_charset(**str, CONV))
+	{
+		parse_attr(str, &(opt.attri));
+		parse_width(str, &opt);
+		parse_pres(str, &opt);
+	}
 	if (**str == 'd' || **str == 'i')
 	{
 		tmp.s_int = va_arg(ap, int);
@@ -94,14 +107,14 @@ static int	ft_printf_2(const char *format, ...)
 	}
 	va_end(ap);
 	return (ret);
-}*/
+}
 
 int	main(void)
 {
-	char *str = "hello %.-0.5-05d its %07d I was wondering if %-14s all this\n";
+	char *str = "hello %-8.2+12.5d its % +d I was wondering if %-14s all this\n";
 
-	//ft_printf_2(str, -789, -456, "after");
-	printf(str, -789, -456, "@fter");
+	ft_printf_2(str, -789, 456, "after");
+	printf(str, -789, 456, "@fter");
 	/*ft_printf_1("hello", "its", "me", "I", "was", "wondering", NULL);*/
 	return (0);
 }
