@@ -56,39 +56,36 @@ static int	nbrlen(t_conv conv, t_opt opt)
 static void	print_space_left(t_conv conv, t_opt opt)
 {
 	int		size;
-	char	ch;
 
-	ch = ' ';
 	size = opt.width - nbrlen(conv, opt);
-	ch = (opt.attri.zero) ? '0' : ' ';
-	size = (conv.s_int < 0) ? (size - 1) : size;
-	if (ch == '0')
-	{
-		if (conv.s_int < 0)
-			ft_putchar('-');
-		else if (opt.attri.plus)
-			ft_putchar('+');
+	if (conv.s_int < 0 || opt.attri.plus)
+		size--;
+	if ((!opt.attri.moins && opt.presi)
+		|| (!opt.attri.moins && !opt.attri.zero && !opt.presi))
+	{	
+		while (size > 0)
+		{
+			ft_putchar(' ');
+			size--;
+		}
 	}
-	while (size-- > 0 && !opt.attri.moins)
-		ft_putchar(ch);
-	if (ch == ' ')
-	{
-		if (conv.s_int < 0)
-			ft_putchar('-');
-		else if (opt.attri.plus)
-			ft_putchar('+');
-	}
+	if (conv.s_int < 0)
+		ft_putchar('-');
+	else if (opt.attri.plus)
+		ft_putchar('+');
 }
 
 static void	print_pres_zero(t_conv conv, t_opt opt)
 {
-	int	signe;
 	int	size;
 
-	signe = 1;
-	size = opt.presi - ft_size_base(conv.s_int, 10);
-	if (conv.s_int < 0)
-		signe = -1;
+	if (opt.attri.zero && !opt.presi && opt.width > opt.presi)
+	{
+		size = opt.width - ft_size_base(conv.s_int, 10);
+		size = (conv.s_int < 0) ? (size -1) : size;
+	}
+	else
+		size = opt.presi - ft_size_base(conv.s_int, 10);
 	while (size > 0)
 	{
 		ft_putchar('0');
@@ -100,7 +97,8 @@ static void	print_space_right(t_conv conv, t_opt opt)
 {
 	int	size;
 	size = opt.width - nbrlen(conv, opt);
-	size = (conv.s_int < 0) ? (size - 1) : size;
+	if (conv.s_int < 0 || opt.attri.plus)
+		size--;
 	while (size > 0)
 	{
 		ft_putchar(' ');

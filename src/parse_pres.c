@@ -21,7 +21,7 @@ void		parse_pres(const char **format, t_opt *opt)
 	tmp = 0;
 	if (**format == '.')
 		(*format)++;
-	if (ft_check_charset(**format, "-123456789"))
+	if (ft_check_charset(**format, "-1234567890"))
 	{
 		pres = ft_atoi(*format);
 		tmp = pres;
@@ -31,7 +31,10 @@ void		parse_pres(const char **format, t_opt *opt)
 			pres = 0;
 		}
 		opt->presi = pres;
-		(*format) += ft_size_base(tmp, 10);
+		if (**format == '-')
+			(*format)++;
+		while (ft_check_charset(**format, "1234567890"))
+			(*format)++;
 	}
 	else
 		opt->presi = 0;

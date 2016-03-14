@@ -28,7 +28,7 @@
 	}
 	va_end(ap);
 }*/
-
+/*
 static void	get_type(const char **str, va_list ap)
 {
 	t_conv	tmp;
@@ -94,14 +94,14 @@ static int	ft_printf_2(const char *format, ...)
 	}
 	va_end(ap);
 	return (ret);
-}
+}*/
 
 int	main(void)
 {
-	char *str = "hello %018.8d its me %07d I was wondering if %-14s all this\n";
+	char *str = "hello %.-0.5-05d its %07d I was wondering if %-14s all this\n";
 
-	ft_printf_2(str, -789, -456, "after");
-	printf(str, -789, -456, "after");
+	//ft_printf_2(str, -789, -456, "after");
+	printf(str, -789, -456, "@fter");
 	/*ft_printf_1("hello", "its", "me", "I", "was", "wondering", NULL);*/
 	return (0);
 }
