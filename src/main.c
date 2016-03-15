@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/05 11:30:13 by jcazako           #+#    #+#             */
-/*   Updated: 2016/03/15 13:50:04 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/03/15 14:46:26 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,39 +45,46 @@ static void	bzero_opt(t_opt *opt)
 	opt->presi = 0;
 	opt->m_len = '\0';
 }
-static int	get_type(const char **str, va_list ap, t_opt opt)
+
+static void	get_conv(const char **format, va_list ap, t_opt *opt)
+{
+	if (ft_check_charset(**format, CONV))
+		opt->type = **format;
+	else if (**format == '%')
+		opt->type = '%';
+	if (opt->type == 'd' || opt->type == 'i')
+		opt->conv.s_int = va_arg(ap, int);
+	else if (opt->type == 'o' || opt->type == 'u'
+		|| opt->type == 'x' || opt->type == 'X')
+		opt->conv.u_int = va_arg(ap, unsigned int);
+	else if (opt->type == 's' || opt->type == 'S')
+		opt->conv.s_type = va_arg(ap, const char*);
+	else if (opt->type == 'p')
+		opt->conv.v_type = va_arg(ap, void*);
+	else if (opt->type == 'c' || opt->type == 'C')
+		opt->conv.c_type = (unsigned char)va_arg(ap, int);
+}
+
+static int	print(t_opt opt)
 {
 	int		ret;
-	t_conv	tmp;
 
 	ret = 0;
-	if (**str == 'd' || **str == 'i')
+	if (opt.type == 'd' || opt.type == 'i')
+		ret += print_nbr(opt.conv, opt);
+	else if (opt.type == 'o' || opt.type == 'u'
+		|| opt.type == 'x' || opt.type == 'X')
+		ft_putnbr(opt.conv.u_int);
+	else if (opt.type == 's' || opt.type == 'S')
+		ret += print_str(opt.conv, opt);
+	else if (opt.type == 'p')
+		ft_putnbr(opt.conv.s_int);
+	else if (opt.type == 'c' || opt.type == 'C')
 	{
-		tmp.s_int = va_arg(ap, int);
-		ret += print_nbr(tmp, opt);
-	}
-	else if (**str == 'o' || **str == 'u' || **str == 'x' || **str == 'X')
-	{
-		tmp.u_int = va_arg(ap, unsigned int);
-		ft_putnbr(tmp.u_int);
-	}
-	else if (**str == 's' || **str == 'S')
-	{
-		tmp.s_type = va_arg(ap, const char*);
-		ret += print_str(tmp, opt);
-	}
-	else if (**str == 'p')
-	{
-		tmp.v_type = va_arg(ap, void*);
-		ft_putnbr((int)tmp.v_type);
-	}
-	else if (**str == 'c' || **str == 'C')
-	{
-		tmp.c_type = (unsigned char)va_arg(ap, int);
-		ft_putchar(tmp.c_type);
+		ft_putchar(opt.conv.c_type);
 		ret++;
 	}
-	else if (**str == '%')
+	else if (opt.type == '%')
 	{
 		ft_putchar('%');
 		ret++;
@@ -98,7 +105,8 @@ static int	print_var(const char **format, va_list ap)
 		parse_width(format, &opt);
 		parse_pres(format, &opt);
 	}
-	ret = get_type(format, ap, opt);
+	get_conv(format, ap, &opt);
+	ret = print(opt);
 	(*format)++;
 	return (ret);
 }
