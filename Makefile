@@ -1,5 +1,5 @@
 CC = gcc
-CFLAG = -Wall -Wextra -Werror -g
+CFLAG = -Wall -Wextra -Werror
 SRC = main.c parse_width.c parse_attr.c print_nbr.c print_str.c parse_pres.c
 SRC_DIR = ./src
 SRC_C = $(patsubst %, $(SRC_DIR)/%, $(SRC))
@@ -11,7 +11,7 @@ LDIR = libft
 LIB = ft
 FILE =
 NAME = ft_printf
-.PHONY: re run rr clean fclean all $(NAME)
+.PHONY: re run rr clean fclean all
 
 all: libft/libft.a $(NAME)
 

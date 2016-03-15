@@ -6,42 +6,12 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/11 13:30:19 by jcazako           #+#    #+#             */
-/*   Updated: 2016/03/13 22:33:55 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/03/15 11:50:41 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-/*
-static void	print_zero(t_conv conv, t_opt opt, int i)
-{
-	int	signe;
 
-	signe = 1;
-	if (i < 0)
-	{
-		ft_putchar('-');
-		signe = -1;
-	}
-	if (!opt.attri.moins)
-		while (i--)
-			ft_putchar('0');
-	ft_putnbr(signe * conv.s_int);
-	if (opt.attri.moins)
-		while (i--)
-			ft_putchar(' ');
-}
-
-static void	print_space(t_conv conv, t_opt opt, int i)
-{
-	if (!opt.attri.moins)
-		while (i--)
-			ft_putchar(' ');
-	ft_putnbr(conv.s_int);
-	if (opt.attri.moins)
-		while (i--)
-			ft_putchar(' ');
-}
-*/
 static int	nbrlen(t_conv conv, t_opt opt)
 {
 	int	len;
@@ -53,10 +23,12 @@ static int	nbrlen(t_conv conv, t_opt opt)
 		return (len);
 }
 
-static void	print_space_left(t_conv conv, t_opt opt)
+static int	print_space_left(t_conv conv, t_opt opt)
 {
 	int		size;
+	int		ret;
 
+	ret = 0;
 	size = opt.width - nbrlen(conv, opt);
 	if (conv.s_int < 0 || opt.attri.plus)
 		size--;
@@ -66,13 +38,26 @@ static void	print_space_left(t_conv conv, t_opt opt)
 		while (size > 0)
 		{
 			ft_putchar(' ');
+			ret++;
 			size--;
 		}
 	}
+	if (opt.attri.space && !ret && conv.s_int > 0 && !opt.attri.plus)
+	{
+		ft_putchar(' ');
+		ret++;
+	}
 	if (conv.s_int < 0)
+	{
 		ft_putchar('-');
+		ret++;
+	}
 	else if (opt.attri.plus)
+	{
 		ft_putchar('+');
+		ret++;
+	}
+	return (ret);
 }
 
 static void	print_pres_zero(t_conv conv, t_opt opt)

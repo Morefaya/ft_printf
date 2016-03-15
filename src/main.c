@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/05 11:30:13 by jcazako           #+#    #+#             */
-/*   Updated: 2016/03/14 22:31:33 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/03/15 12:05:20 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,20 @@ static void	bzero_attr(t_opt *opt)
 	opt->attri.space = 0;
 }
 
+static void	bzero_opt(t_opt *opt)
+{
+	bzero_attr(opt);
+	opt->width = 0;
+	opt->presi = 0;
+	opt->m_len = '\0';
+}
+
 static void	get_type(const char **str, va_list ap)
 {
 	t_conv	tmp;
 	t_opt	opt;
 
-	bzero_attr(&opt);
+	bzero_opt(&opt);
 	while (!ft_check_charset(**str, CONV))
 	{
 		parse_attr(str, &(opt.attri));
@@ -111,7 +119,7 @@ static int	ft_printf_2(const char *format, ...)
 
 int	main(void)
 {
-	char *str = "hello %-8.2+12.5d its % +d I was wondering if %-14s all this\n";
+	char *str = "hello %- 12.2+17.5d its %  d I was wondering if %-14s all this\n";
 
 	ft_printf_2(str, -789, 456, "after");
 	printf(str, -789, 456, "@fter");

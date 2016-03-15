@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/11 11:42:37 by jcazako           #+#    #+#             */
-/*   Updated: 2016/03/11 17:47:39 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/03/15 11:57:27 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,4 @@ void	parse_width(const char **format, t_opt *opt)
 		(*format) += ft_size_base(width, 10);
 		opt->width = width;
 	}
-	else
-		opt->width = 0;
 }
