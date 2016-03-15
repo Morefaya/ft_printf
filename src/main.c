@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/05 11:30:13 by jcazako           #+#    #+#             */
-/*   Updated: 2016/03/15 14:46:26 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/03/15 16:25:53 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,37 @@ static void	bzero_opt(t_opt *opt)
 	opt->width = 0;
 	opt->presi = 0;
 	opt->m_len = '\0';
+	opt->type = '\0';
+	opt->conv.l_type = 0;
+}
+
+static void	parse_modifier(const char **format, t_opt *opt)
+{
+	if (**format == 'l')
+	{
+		if (*(*format + 1) == 'l')
+		{
+			opt->m_len = 'L';
+			(*format)++;
+		}
+		else
+			opt->m_len = 'l';
+	}
+	else if (**format == 'h')
+	{
+		if (*(*format + 1) == 'h')
+		{
+			opt->m_len = 'H';
+			(*format)++;
+		}
+		else
+			opt->m_len = 'h';
+	}
+	else if (**format == 'j')
+		opt->m_len = 'j';
+	else if (**format == 'z')
+		opt->m_len = 'z';
+	(*format)++;
 }
 
 static void	get_conv(const char **format, va_list ap, t_opt *opt)
@@ -91,7 +122,23 @@ static int	print(t_opt opt)
 	}
 	return (ret);
 }
-
+/*
+static void	modify_len(t_opt *opt)
+{
+	if (ft_check_charset(opt->type, "diouxX"))
+	{
+		if (opt->m_len == 'h')
+			opt->conv &= opt->conv & 0x000000000000ffff;
+		else if (opt->m_len == 'H')
+			opt->conv &= opt->conv & 0x00000000000000ff;
+		else if (opt->m_len == 'l' || opt->m_len == 'L')
+			opt->conv &= opt->conv & 0xffffffffffffffff;
+		else
+			opt->conv &= opt->conv & 0x00000000ffffffff;
+	}
+	else if (opt->type )
+}
+*/
 static int	print_var(const char **format, va_list ap)
 {
 	int		ret;
@@ -104,8 +151,11 @@ static int	print_var(const char **format, va_list ap)
 		parse_attr(format, &(opt.attri));
 		parse_width(format, &opt);
 		parse_pres(format, &opt);
+		if (ft_check_charset(**format, "lhjz"))
+			parse_modifier(format, &opt);
 	}
 	get_conv(format, ap, &opt);
+	//modify_len(opt);
 	ret = print(opt);
 	(*format)++;
 	return (ret);
@@ -142,7 +192,7 @@ static int	ft_printf_2(const char *format, ...)
 
 int	main(void)
 {
-	char	*str = "hello  %- 12.2+17.5d its %  d chinese: %-14s\n";
+	char	*str = "hello  %- 12.2+17.5d its % l d chinese: %-14s\n";
 	int		ret_ft = ft_printf_2(str, -789, 456, "畢竟");
 	int		ret_pf = printf(str, -789, 456, "畢竟");
 	printf("returns: -ft %d\t-pf %d\n", ret_ft, ret_pf);
