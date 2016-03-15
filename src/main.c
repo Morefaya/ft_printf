@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/05 11:30:13 by jcazako           #+#    #+#             */
-/*   Updated: 2016/03/15 12:05:20 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/03/15 13:50:04 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,23 +45,16 @@ static void	bzero_opt(t_opt *opt)
 	opt->presi = 0;
 	opt->m_len = '\0';
 }
-
-static void	get_type(const char **str, va_list ap)
+static int	get_type(const char **str, va_list ap, t_opt opt)
 {
+	int		ret;
 	t_conv	tmp;
-	t_opt	opt;
 
-	bzero_opt(&opt);
-	while (!ft_check_charset(**str, CONV))
-	{
-		parse_attr(str, &(opt.attri));
-		parse_width(str, &opt);
-		parse_pres(str, &opt);
-	}
+	ret = 0;
 	if (**str == 'd' || **str == 'i')
 	{
 		tmp.s_int = va_arg(ap, int);
-		print_nbr(tmp, opt);
+		ret += print_nbr(tmp, opt);
 	}
 	else if (**str == 'o' || **str == 'u' || **str == 'x' || **str == 'X')
 	{
@@ -71,7 +64,7 @@ static void	get_type(const char **str, va_list ap)
 	else if (**str == 's' || **str == 'S')
 	{
 		tmp.s_type = va_arg(ap, const char*);
-		print_str(tmp, opt);
+		ret += print_str(tmp, opt);
 	}
 	else if (**str == 'p')
 	{
@@ -82,10 +75,32 @@ static void	get_type(const char **str, va_list ap)
 	{
 		tmp.c_type = (unsigned char)va_arg(ap, int);
 		ft_putchar(tmp.c_type);
+		ret++;
 	}
 	else if (**str == '%')
+	{
 		ft_putchar('%');
-	(*str)++;
+		ret++;
+	}
+	return (ret);
+}
+
+static int	print_var(const char **format, va_list ap)
+{
+	int		ret;
+	t_opt	opt;
+
+	ret = 0;
+	bzero_opt(&opt);
+	while (!ft_check_charset(**format, CONV))
+	{
+		parse_attr(format, &(opt.attri));
+		parse_width(format, &opt);
+		parse_pres(format, &opt);
+	}
+	ret = get_type(format, ap, opt);
+	(*format)++;
+	return (ret);
 }
 
 static int	ft_printf_2(const char *format, ...)
@@ -111,7 +126,7 @@ static int	ft_printf_2(const char *format, ...)
 			format += ft_strlen(format) + 1;
 			break;
 		}
-		get_type(&format, ap);
+		ret += print_var(&format, ap);
 	}
 	va_end(ap);
 	return (ret);
@@ -119,10 +134,10 @@ static int	ft_printf_2(const char *format, ...)
 
 int	main(void)
 {
-	char *str = "hello %- 12.2+17.5d its %  d I was wondering if %-14s all this\n";
-
-	ft_printf_2(str, -789, 456, "after");
-	printf(str, -789, 456, "@fter");
+	char	*str = "hello  %- 12.2+17.5d its %  d chinese: %-14s\n";
+	int		ret_ft = ft_printf_2(str, -789, 456, "畢竟");
+	int		ret_pf = printf(str, -789, 456, "畢竟");
+	printf("returns: -ft %d\t-pf %d\n", ret_ft, ret_pf);
 	/*ft_printf_1("hello", "its", "me", "I", "was", "wondering", NULL);*/
 	return (0);
 }

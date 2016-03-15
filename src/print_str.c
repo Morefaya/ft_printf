@@ -6,17 +6,19 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/11 14:44:38 by jcazako           #+#    #+#             */
-/*   Updated: 2016/03/11 14:55:04 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/03/15 13:20:50 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	print_str(t_conv conv, t_opt opt)
+int		print_str(t_conv conv, t_opt opt)
 {
 	int	size;
 	int i;
+	int	ret;
 
+	ret = 0;
 	size = 0;
 	i = 0;
 	if (opt.width)
@@ -27,9 +29,18 @@ void	print_str(t_conv conv, t_opt opt)
 	}
 	if (!opt.attri.moins)
 		while (i--)
+		{
 			ft_putchar(' ');
+			ret++;
+		}
 	ft_putstr(conv.s_type);
+	if (conv.s_type)
+		ret += ft_strlen(conv.s_type);
 	if (opt.attri.moins)
 		while (i--)
+		{
 			ft_putchar(' ');
+			ret++;
+		}
+	return (ret);
 }

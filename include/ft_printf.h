@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/05 14:25:50 by jcazako           #+#    #+#             */
-/*   Updated: 2016/03/14 22:17:11 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/03/15 13:57:27 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,14 @@ typedef struct		s_opt
 	int				width;
 	int				presi;
 	char			m_len;
+	char			type;
+	t_conv			conv;
 }					t_opt;
 
 void				parse_attr(const char **str, t_attr *att);
 void				parse_width(const char **format, t_opt *opt);
-void				print_nbr(t_conv conv, t_opt opt);
-void				print_str(t_conv conv, t_opt opt);
+int					print_nbr(t_conv conv, t_opt opt);
+int					print_str(t_conv conv, t_opt opt);
 void				parse_pres(const char **format, t_opt *opt);
 
 #endif
