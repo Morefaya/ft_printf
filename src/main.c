@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/05 11:30:13 by jcazako           #+#    #+#             */
-/*   Updated: 2016/03/15 20:19:41 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/03/21 22:38:00 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,11 +170,10 @@ static int	ft_printf_2(const char *format, ...)
 int	main(void)
 {
 	long	a = -1802338310;
-	long	b = 547;
 
-	char	*str = "hello %20.16d its % l d chinese: %s\n";
-	int	ret_ft = ft_printf_2(str, a, b, "畢竟");
-	int	ret_pf = printf(str, a, b, "畢竟");
+	char	*str = "%d\n";
+	int	ret_ft = ft_printf_2(str, a);
+	int	ret_pf = printf(str, a);
 	printf("returns: -ft %d\t-pf %d\n", ret_ft, ret_pf);
 	return (0);
 }

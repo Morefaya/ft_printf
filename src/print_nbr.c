@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/11 13:30:19 by jcazako           #+#    #+#             */
-/*   Updated: 2016/03/15 20:56:14 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/03/21 22:35:32 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,16 @@ static int	print_space_right(t_opt opt)
 
 	ret = 0;
 	size = opt.width - nbrlen(opt);
-	if (opt.conv < 0 || opt.attri.plus)
-		size--;
+	if (ft_check_charset(opt.type, "di"))
+	{
+		if ((int)opt.conv < 0 || opt.attri.plus)
+			size--;
+	}
+	else if (opt.type == 'D')
+	{
+		if (opt.conv < 0 || opt.attri.plus)
+			size--;
+	}
 	while (size > 0)
 	{
 		ft_putchar(' ');
@@ -95,11 +103,7 @@ static int	print_choice(t_opt opt)
 	else if (opt.type == 'o')
 		putlong_nbr(opt.conv, opt);
 	else
-	{
-		if ((((int)opt.conv) < 0))
-			ret++;
 		ft_putnbr(signe_i * opt.conv);
-	}
 	ret += size_base(opt);
 	return (ret);
 }
