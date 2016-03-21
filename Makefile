@@ -1,6 +1,7 @@
 CC = gcc
-CFLAG = -Wall -Wextra -Werror
-SRC = main.c parse_width.c parse_attr.c print_nbr.c print_str.c parse_pres.c
+CFLAG = -Wall -Wextra -Werror -g
+SRC = main.c parse_width.c parse_attr.c print_nbr.c print_str.c parse_pres.c \
+size_base.c putlong_char.c putlong_nbr.c print_space_left.c
 SRC_DIR = ./src
 SRC_C = $(patsubst %, $(SRC_DIR)/%, $(SRC))
 OBJ = $(patsubst %.c, %.o, $(SRC))

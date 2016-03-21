@@ -6,13 +6,13 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/11 14:44:38 by jcazako           #+#    #+#             */
-/*   Updated: 2016/03/15 13:20:50 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/03/15 21:57:11 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		print_str(t_conv conv, t_opt opt)
+int		print_str(t_opt opt)
 {
 	int	size;
 	int i;
@@ -23,8 +23,8 @@ int		print_str(t_conv conv, t_opt opt)
 	i = 0;
 	if (opt.width)
 	{
-		if (conv.s_type)
-			size = ft_strlen(conv.s_type);
+		if (opt.conv)
+			size = ft_strlen((char*)opt.conv);
 		i = opt.width - size;
 	}
 	if (!opt.attri.moins)
@@ -33,9 +33,9 @@ int		print_str(t_conv conv, t_opt opt)
 			ft_putchar(' ');
 			ret++;
 		}
-	ft_putstr(conv.s_type);
-	if (conv.s_type)
-		ret += ft_strlen(conv.s_type);
+	ft_putstr((char*)opt.conv);
+	if (opt.conv)
+		ret += ft_strlen((const char*)opt.conv);
 	if (opt.attri.moins)
 		while (i--)
 		{

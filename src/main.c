@@ -6,28 +6,13 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/05 11:30:13 by jcazako           #+#    #+#             */
-/*   Updated: 2016/03/15 16:25:53 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/03/15 20:19:41 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <stdio.h>
 #include <unistd.h>
-
-/*static void	ft_printf_1(const char *format, ...)
-{
-	va_list	ap;
-	int	i;
-
-	i = 0;
-	va_start(ap, format);
-	while (format)
-	{
-		ft_putendl(format);
-		format = va_arg(ap, char*);
-	}
-	va_end(ap);
-}*/
 
 static void	bzero_attr(t_opt *opt)
 {
@@ -45,7 +30,7 @@ static void	bzero_opt(t_opt *opt)
 	opt->presi = 0;
 	opt->m_len = '\0';
 	opt->type = '\0';
-	opt->conv.l_type = 0;
+	opt->conv = 0;
 }
 
 static void	parse_modifier(const char **format, t_opt *opt)
@@ -80,20 +65,12 @@ static void	parse_modifier(const char **format, t_opt *opt)
 static void	get_conv(const char **format, va_list ap, t_opt *opt)
 {
 	if (ft_check_charset(**format, CONV))
+	{
+		opt->conv = va_arg(ap, long);
 		opt->type = **format;
+	}
 	else if (**format == '%')
 		opt->type = '%';
-	if (opt->type == 'd' || opt->type == 'i')
-		opt->conv.s_int = va_arg(ap, int);
-	else if (opt->type == 'o' || opt->type == 'u'
-		|| opt->type == 'x' || opt->type == 'X')
-		opt->conv.u_int = va_arg(ap, unsigned int);
-	else if (opt->type == 's' || opt->type == 'S')
-		opt->conv.s_type = va_arg(ap, const char*);
-	else if (opt->type == 'p')
-		opt->conv.v_type = va_arg(ap, void*);
-	else if (opt->type == 'c' || opt->type == 'C')
-		opt->conv.c_type = (unsigned char)va_arg(ap, int);
 }
 
 static int	print(t_opt opt)
@@ -101,20 +78,17 @@ static int	print(t_opt opt)
 	int		ret;
 
 	ret = 0;
-	if (opt.type == 'd' || opt.type == 'i')
-		ret += print_nbr(opt.conv, opt);
+	if (opt.type == 'd' || opt.type == 'i' || opt.type == 'D')
+		ret += print_nbr(opt);
 	else if (opt.type == 'o' || opt.type == 'u'
 		|| opt.type == 'x' || opt.type == 'X')
-		ft_putnbr(opt.conv.u_int);
+		ret += print_nbr(opt);
 	else if (opt.type == 's' || opt.type == 'S')
-		ret += print_str(opt.conv, opt);
+		ret += print_str(opt);
 	else if (opt.type == 'p')
-		ft_putnbr(opt.conv.s_int);
+		ret += print_nbr(opt);
 	else if (opt.type == 'c' || opt.type == 'C')
-	{
-		ft_putchar(opt.conv.c_type);
-		ret++;
-	}
+		ret += putlong_char(opt.conv);
 	else if (opt.type == '%')
 	{
 		ft_putchar('%');
@@ -122,23 +96,26 @@ static int	print(t_opt opt)
 	}
 	return (ret);
 }
-/*
+
 static void	modify_len(t_opt *opt)
 {
-	if (ft_check_charset(opt->type, "diouxX"))
+	if (ft_check_charset(opt->type, CONV))
 	{
 		if (opt->m_len == 'h')
 			opt->conv &= opt->conv & 0x000000000000ffff;
 		else if (opt->m_len == 'H')
 			opt->conv &= opt->conv & 0x00000000000000ff;
-		else if (opt->m_len == 'l' || opt->m_len == 'L')
+		else if (opt->type == 'c')
+			opt->conv &= opt->conv & 0x000000000000000f;
+		else if (opt->m_len == 'l' || opt->m_len == 'L'
+			|| opt->type == 's' || opt->type == 'p'
+			|| opt->type == 'D')
 			opt->conv &= opt->conv & 0xffffffffffffffff;
 		else
 			opt->conv &= opt->conv & 0x00000000ffffffff;
 	}
-	else if (opt->type )
 }
-*/
+
 static int	print_var(const char **format, va_list ap)
 {
 	int		ret;
@@ -155,7 +132,7 @@ static int	print_var(const char **format, va_list ap)
 			parse_modifier(format, &opt);
 	}
 	get_conv(format, ap, &opt);
-	//modify_len(opt);
+	modify_len(&opt);
 	ret = print(opt);
 	(*format)++;
 	return (ret);
@@ -192,10 +169,12 @@ static int	ft_printf_2(const char *format, ...)
 
 int	main(void)
 {
-	char	*str = "hello  %- 12.2+17.5d its % l d chinese: %-14s\n";
-	int		ret_ft = ft_printf_2(str, -789, 456, "畢竟");
-	int		ret_pf = printf(str, -789, 456, "畢竟");
+	long	a = -1802338310;
+	long	b = 547;
+
+	char	*str = "hello %20.16d its % l d chinese: %s\n";
+	int	ret_ft = ft_printf_2(str, a, b, "畢竟");
+	int	ret_pf = printf(str, a, b, "畢竟");
 	printf("returns: -ft %d\t-pf %d\n", ret_ft, ret_pf);
-	/*ft_printf_1("hello", "its", "me", "I", "was", "wondering", NULL);*/
 	return (0);
 }

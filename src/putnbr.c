@@ -1,22 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendchar.c                                    :+:      :+:    :+:   */
+/*   putnbr.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/02/19 17:46:24 by jcazako           #+#    #+#             */
-/*   Updated: 2016/02/19 17:48:15 by jcazako          ###   ########.fr       */
+/*   Created: 2016/03/15 21:11:15 by jcazako           #+#    #+#             */
+/*   Updated: 2016/03/15 21:34:06 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-void	ft_putendchar(char *str, char a)
+void	putnbr(long nbr)
 {
-	if (str)
+	if (nbr == 9223372036854775807)
 	{
-		ft_putstr(str);
-		ft_putchar(a);
+		ft_putstr("9223372036854775807");
+		return ;
 	}
+	if (nbr < 0)
+	{
+		nbr *= -1;
+		ft_putchar('-');
+	}
+	if (nbr > 9)
+	{
+		putnbr(nbr / 10);
+		putnbr(nbr % 10);
+	}
+	else
+		ft_putchar('0' + nbr);
 }

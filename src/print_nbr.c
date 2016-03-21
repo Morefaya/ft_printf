@@ -6,61 +6,24 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/11 13:30:19 by jcazako           #+#    #+#             */
-/*   Updated: 2016/03/15 13:30:22 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/03/15 20:56:14 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	nbrlen(t_conv conv, t_opt opt)
+int	nbrlen(t_opt opt)
 {
 	int	len;
 
-	len = ft_size_base(conv.s_int, 10);
+	len = size_base(opt);
 	if (opt.presi > len)
 		return (opt.presi);
 	else
 		return (len);
 }
 
-static int	print_space_left(t_conv conv, t_opt opt)
-{
-	int		size;
-	int		ret;
-
-	ret = 0;
-	size = opt.width - nbrlen(conv, opt);
-	if (conv.s_int < 0 || opt.attri.plus)
-		size--;
-	if ((!opt.attri.moins && opt.presi)
-		|| (!opt.attri.moins && !opt.attri.zero && !opt.presi))
-	{	
-		while (size > 0)
-		{
-			ft_putchar(' ');
-			ret++;
-			size--;
-		}
-	}
-	if (opt.attri.space && !ret && conv.s_int > 0 && !opt.attri.plus)
-	{
-		ft_putchar(' ');
-		ret++;
-	}
-	if (conv.s_int < 0)
-	{
-		ft_putchar('-');
-		ret++;
-	}
-	else if (opt.attri.plus)
-	{
-		ft_putchar('+');
-		ret++;
-	}
-	return (ret);
-}
-
-static int	print_zero(t_conv conv, t_opt opt)
+static int	print_zero(t_opt opt)
 {
 	int	size;
 	int	ret;
@@ -68,11 +31,12 @@ static int	print_zero(t_conv conv, t_opt opt)
 	ret = 0;
 	if (opt.attri.zero && !opt.presi && opt.width > opt.presi)
 	{
-		size = opt.width - ft_size_base(conv.s_int, 10);
-		size = (conv.s_int < 0) ? (size -1) : size;
+		size = opt.width - size_base(opt);
+		if (ft_check_charset(opt.type, "diD"))
+			size = (opt.conv < 0) ? (size - 1) : size;
 	}
 	else
-		size = opt.presi - ft_size_base(conv.s_int, 10);
+		size = opt.presi - size_base(opt);
 	while (size > 0)
 	{
 		ft_putchar('0');
@@ -82,14 +46,14 @@ static int	print_zero(t_conv conv, t_opt opt)
 	return (ret);
 }
 
-static int	print_space_right(t_conv conv, t_opt opt)
+static int	print_space_right(t_opt opt)
 {
 	int	size;
 	int	ret;
 
 	ret = 0;
-	size = opt.width - nbrlen(conv, opt);
-	if (conv.s_int < 0 || opt.attri.plus)
+	size = opt.width - nbrlen(opt);
+	if (opt.conv < 0 || opt.attri.plus)
 		size--;
 	while (size > 0)
 	{
@@ -99,21 +63,59 @@ static int	print_space_right(t_conv conv, t_opt opt)
 	}
 	return (ret);
 }
-
-int		print_nbr(t_conv conv, t_opt opt)
+static int	print_prefix(t_opt opt, int ret_z)
 {
-	int	signe;
+	if (opt.type == 'x' || opt.type == 'X')
+	{
+		ft_putstr("0x");
+		return (2);
+	}
+	else if (opt.type == 'o' && !ret_z)
+	{
+		ft_putchar('0');
+		return (1);
+	}
+	return (0);
+}
+static int	print_choice(t_opt opt)
+{
 	int	ret;
+	int	signe_l;
+	int	signe_i;
+
+	signe_l = (opt.conv < 0) ? -1 : 1;
+	signe_i = ((int)opt.conv < 0 ) ? -1 : 1; 
+	ret = 0;
+	if (opt.type == 'D')
+		putlong_nbr(signe_l * opt.conv, opt);
+	else if (opt.type == 'u')
+		putlong_nbr(opt.conv, opt);
+	else if (opt.type == 'x' || opt.type == 'X')
+		putlong_nbr(opt.conv, opt);
+	else if (opt.type == 'o')
+		putlong_nbr(opt.conv, opt);
+	else
+	{
+		if ((((int)opt.conv) < 0))
+			ret++;
+		ft_putnbr(signe_i * opt.conv);
+	}
+	ret += size_base(opt);
+	return (ret);
+}
+
+int		print_nbr(t_opt opt)
+{
+	int	ret;
+	int	ret_z;
 
 	ret = 0;
-	signe = 1;
-	if (conv.s_int < 0)
-		signe = -1;
-	ret += print_space_left(conv, opt);
-	ret += print_zero(conv, opt);
-	ft_putnbr(signe * (conv.s_int));
-	ret += ft_size_base(conv.s_int, 10);
+	ret += print_space_left(opt);
+	ret_z = print_zero(opt);
+	ret += ret_z;
+	ret += print_prefix(opt, ret_z);
+	ret += print_choice(opt);
 	if (opt.attri.moins)
-		ret += print_space_right(conv, opt);
+		ret += print_space_right(opt);
 	return (ret);
 }

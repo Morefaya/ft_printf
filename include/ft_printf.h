@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/05 14:25:50 by jcazako           #+#    #+#             */
-/*   Updated: 2016/03/15 13:57:27 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/03/15 20:17:02 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,6 @@
 
 # define ATTR "#0-+ "
 # define CONV "sSpdDioOuUxXcC"
-
-typedef union		u_conv
-{
-	char			c_type;
-	int				s_int;
-	unsigned int	u_int;
-	long			l_type;
-	float			f_type;
-	double			d_type;
-	const char		*s_type;
-	void			*v_type;
-}					t_conv;
 
 typedef struct		s_attr
 {
@@ -47,13 +35,20 @@ typedef struct		s_opt
 	int				presi;
 	char			m_len;
 	char			type;
-	t_conv			conv;
+	long			conv;
 }					t_opt;
+
+int					size_base(t_opt opt);
+int					putlong_char(long ch);
+int					putlong_str(long str);
+void					putlong_nbr(long nbr, t_opt opt);
 
 void				parse_attr(const char **str, t_attr *att);
 void				parse_width(const char **format, t_opt *opt);
-int					print_nbr(t_conv conv, t_opt opt);
-int					print_str(t_conv conv, t_opt opt);
+int					print_nbr(t_opt opt);
+int					print_str(t_opt opt);
 void				parse_pres(const char **format, t_opt *opt);
 
+int				print_space_left(t_opt opt);
+int				nbrlen(t_opt opt);
 #endif
