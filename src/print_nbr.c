@@ -23,7 +23,7 @@ int	nbrlen(t_opt opt)
 		return (len);
 }
 
-static int	print_zero(t_opt opt)
+int	print_zero_left(t_opt opt, int cond)
 {
 	int	size;
 	int	ret;
@@ -39,30 +39,21 @@ static int	print_zero(t_opt opt)
 		size = opt.presi - size_base(opt);
 	while (size > 0)
 	{
-		ft_putchar('0');
+		if (cond)
+			ft_putchar('0');
 		ret++;
 		size--;
 	}
 	return (ret);
 }
 
-static int	print_space_right(t_opt opt)
+static int	print_space_right(t_opt opt, int ret_p)
 {
 	int	size;
 	int	ret;
 
 	ret = 0;
-	size = opt.width - nbrlen(opt);
-	if (ft_check_charset(opt.type, "di"))
-	{
-		if ((int)opt.conv < 0 || opt.attri.plus)
-			size--;
-	}
-	else if (opt.type == 'D')
-	{
-		if (opt.conv < 0 || opt.attri.plus)
-			size--;
-	}
+	size = opt.width - ret_p;
 	while (size > 0)
 	{
 		ft_putchar(' ');
@@ -71,16 +62,24 @@ static int	print_space_right(t_opt opt)
 	}
 	return (ret);
 }
-static int	print_prefix(t_opt opt, int ret_z)
+int	print_prefix(t_opt opt, int cond)
 {
-	if (opt.type == 'x' || opt.type == 'X')
+	if (ft_check_charset(opt.type, "xX") && opt.attri.diez)
 	{
-		ft_putstr("0x");
+		if (cond)
+		{
+			if (opt.type == 'x')
+				ft_putstr("0x");
+			else
+				ft_putstr("0X");
+		}
 		return (2);
 	}
-	else if (opt.type == 'o' && !ret_z)
+	else if (opt.type == 'o' && !print_zero_left(opt, 0)
+		&& opt.attri.diez)
 	{
-		ft_putchar('0');
+		if (cond)
+			ft_putchar('0');
 		return (1);
 	}
 	return (0);
@@ -96,8 +95,10 @@ static int	print_choice(t_opt opt)
 	ret = 0;
 	if (opt.type == 'D')
 		putlong_nbr(signe_l * opt.conv, opt);
-	else if (opt.type == 'u' || opt.type == 'U')
+	else if (opt.type == 'u')
 		putlong_nbr(opt.conv, opt);
+	else if (opt.type == 'U')
+		putun_nbr(opt.conv, opt);
 	else if (opt.type == 'x' || opt.type == 'X')
 		putlong_nbr(opt.conv, opt);
 	else if (opt.type == 'o')
@@ -111,15 +112,13 @@ static int	print_choice(t_opt opt)
 int		print_nbr(t_opt opt)
 {
 	int	ret;
-	int	ret_z;
 
 	ret = 0;
 	ret += print_space_left(opt);
-	ret_z = print_zero(opt);
-	ret += ret_z;
-	ret += print_prefix(opt, ret_z);
+	ret += print_prefix(opt, 1);
+	ret += print_zero_left(opt, 1);
 	ret += print_choice(opt);
 	if (opt.attri.moins)
-		ret += print_space_right(opt);
+		ret += print_space_right(opt, ret);
 	return (ret);
 }

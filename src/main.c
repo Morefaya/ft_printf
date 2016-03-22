@@ -169,9 +169,9 @@ static int	ft_printf_2(const char *format, ...)
 
 int	main(void)
 {
-	long	a = -9223372036854775806;
+	long	a = 92372036854775;
 
-	char	*str = "%U\n";
+	char	*str = "%hd\n";
 	int	ret_ft = ft_printf_2(str, a);
 	int	ret_pf = printf(str, a);
 	printf("returns: -ft %d\t-pf %d\n", ret_ft, ret_pf);

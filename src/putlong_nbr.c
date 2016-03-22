@@ -1,37 +1,35 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   putnbr.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/03/15 21:11:15 by jcazako           #+#    #+#             */
-/*   Updated: 2016/03/15 21:34:06 by jcazako          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+
 
 #include "ft_printf.h"
+
+static long	check_base(t_opt opt)
+{
+	if (opt.type == 'x' || opt.type == 'X')
+		return (16);
+	else if (opt.type == 'o')
+		return (8);
+	else
+		return (10);
+}
 
 void	putlong_nbr(long nbr, t_opt opt)
 {
 	long	base;
+	char	*base_set;
 
+	base = check_base(opt);
 	if (opt.type == 'x' || opt.type == 'X')
-		base = 16;
+		base_set = (opt.type == 'x') ?
+			"0123456789abcdef" : "0123456789ABCDEF";
 	else if (opt.type == 'o')
-		base = 8;
+		base_set = "01234567";
 	else
-		base = 10;
-	if (nbr == 9223372036854)
-	{
-		ft_putstr("9223372036854");
-		return ;
-	}
+		base_set = "0123456789";
 	if (nbr > base - 1)
 	{
 		putlong_nbr(nbr / base, opt);
 		putlong_nbr(nbr % base, opt);
 	}
 	else
-		ft_putchar('0' + nbr);
+		ft_putchar(base_set[nbr]);
 }
