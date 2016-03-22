@@ -80,7 +80,7 @@ static int	print(t_opt opt)
 	ret = 0;
 	if (opt.type == 'd' || opt.type == 'i' || opt.type == 'D')
 		ret += print_nbr(opt);
-	else if (opt.type == 'o' || opt.type == 'u'
+	else if (opt.type == 'o' || opt.type == 'u' || opt.type == 'U'
 		|| opt.type == 'x' || opt.type == 'X')
 		ret += print_nbr(opt);
 	else if (opt.type == 's' || opt.type == 'S')
@@ -109,7 +109,7 @@ static void	modify_len(t_opt *opt)
 			opt->conv &= opt->conv & 0x000000000000000f;
 		else if (opt->m_len == 'l' || opt->m_len == 'L'
 			|| opt->type == 's' || opt->type == 'p'
-			|| opt->type == 'D')
+			|| opt->type == 'D' || opt->type == 'U')
 			opt->conv &= opt->conv & 0xffffffffffffffff;
 		else
 			opt->conv &= opt->conv & 0x00000000ffffffff;
@@ -169,9 +169,9 @@ static int	ft_printf_2(const char *format, ...)
 
 int	main(void)
 {
-	long	a = -1802338310;
+	long	a = -9223372036854775806;
 
-	char	*str = "%d\n";
+	char	*str = "%U\n";
 	int	ret_ft = ft_printf_2(str, a);
 	int	ret_pf = printf(str, a);
 	printf("returns: -ft %d\t-pf %d\n", ret_ft, ret_pf);

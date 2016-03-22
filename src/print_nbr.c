@@ -96,7 +96,7 @@ static int	print_choice(t_opt opt)
 	ret = 0;
 	if (opt.type == 'D')
 		putlong_nbr(signe_l * opt.conv, opt);
-	else if (opt.type == 'u')
+	else if (opt.type == 'u' || opt.type == 'U')
 		putlong_nbr(opt.conv, opt);
 	else if (opt.type == 'x' || opt.type == 'X')
 		putlong_nbr(opt.conv, opt);
