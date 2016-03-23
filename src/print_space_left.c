@@ -12,6 +12,21 @@
 
 #include "ft_printf.h"
 
+int	check_signe_moins(t_opt opt)
+{
+	if (ft_check_charset(opt.type, "di"))
+	{
+		if ((!opt.m_len && (int)opt.conv < 0)
+			|| (opt.m_len == 'h' && (short)opt.conv < 0)
+			|| (opt.m_len == 'H' && (char)opt.conv < 0)
+			|| (ft_check_charset(opt.m_len, "lL") && opt.conv < 0))
+		return (-1);
+	}
+	else if (opt.type == 'D' && opt.conv < 0)
+		return (-1);
+	return (1);
+}
+
 static int	print_plus(t_opt opt, int *ret)
 {
 	if (opt.attri.plus && ft_check_charset(opt.type, "diD"))
@@ -24,8 +39,7 @@ static int	print_plus(t_opt opt, int *ret)
 
 static int      print_moins(t_opt opt, int *ret)
 {
-	if ((ft_check_charset(opt.type, "di") && (int)opt.conv < 0)
-			|| (opt.type == 'D' && opt.conv < 0))
+	if (check_signe_moins(opt) == -1)
 	{
 			(*ret)++;
 		return (1);

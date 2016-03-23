@@ -4,7 +4,7 @@
 
 static long	check_base(t_opt opt)
 {
-	if (opt.type == 'x' || opt.type == 'X')
+	if (ft_check_charset(opt.type, "xXp"))
 		return (16);
 	else if (opt.type == 'o')
 		return (8);

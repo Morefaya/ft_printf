@@ -54,4 +54,5 @@ int				print_space_left(t_opt opt);
 int				print_zero_left(t_opt opt, int cond);
 int				print_prefix(t_opt opt, int cond);
 int				nbrlen(t_opt opt);
+int				check_signe_moins(t_opt opt);
 #endif

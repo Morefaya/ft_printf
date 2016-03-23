@@ -62,6 +62,7 @@ static int	print_space_right(t_opt opt, int ret_p)
 	}
 	return (ret);
 }
+
 int	print_prefix(t_opt opt, int cond)
 {
 	if ((ft_check_charset(opt.type, "xX") && opt.attri.diez)
@@ -94,11 +95,13 @@ static int	print_choice(t_opt opt)
 	signe_l = (opt.conv < 0) ? -1 : 1;
 	signe_i = ((int)opt.conv < 0 ) ? -1 : 1; 
 	ret = 0;
-	if (opt.type == 'D')
+	if (opt.type == 'D'
+		|| (opt.type == 'd' && ft_check_charset(opt.m_len, "lL")))
 		putlong_nbr(signe_l * opt.conv, opt);
-	else if (opt.type == 'u')
-		putlong_nbr(opt.conv, opt);
-	else if (opt.type == 'U' || opt.type == 'p')
+	/*else if (opt.type == 'u')
+		putlun_nbr(signe_l * opt.conv, opt);*/
+	else if (opt.type == 'U' || opt.type == 'p'
+		|| (opt.type == 'u' && ft_check_charset(opt.m_len, "lL")))
 		putlun_nbr(opt.conv, opt);
 	else if (opt.type == 'x' || opt.type == 'X')
 		putlong_nbr(opt.conv, opt);
