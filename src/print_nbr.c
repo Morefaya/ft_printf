@@ -64,11 +64,12 @@ static int	print_space_right(t_opt opt, int ret_p)
 }
 int	print_prefix(t_opt opt, int cond)
 {
-	if (ft_check_charset(opt.type, "xX") && opt.attri.diez)
+	if ((ft_check_charset(opt.type, "xX") && opt.attri.diez)
+		|| opt.type == 'p')
 	{
 		if (cond)
 		{
-			if (opt.type == 'x')
+			if (ft_check_charset(opt.type, "xp"))
 				ft_putstr("0x");
 			else
 				ft_putstr("0X");
@@ -97,8 +98,8 @@ static int	print_choice(t_opt opt)
 		putlong_nbr(signe_l * opt.conv, opt);
 	else if (opt.type == 'u')
 		putlong_nbr(opt.conv, opt);
-	else if (opt.type == 'U')
-		putun_nbr(opt.conv, opt);
+	else if (opt.type == 'U' || opt.type == 'p')
+		putlun_nbr(opt.conv, opt);
 	else if (opt.type == 'x' || opt.type == 'X')
 		putlong_nbr(opt.conv, opt);
 	else if (opt.type == 'o')

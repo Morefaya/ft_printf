@@ -78,15 +78,10 @@ static int	print(t_opt opt)
 	int		ret;
 
 	ret = 0;
-	if (opt.type == 'd' || opt.type == 'i' || opt.type == 'D')
-		ret += print_nbr(opt);
-	else if (opt.type == 'o' || opt.type == 'u' || opt.type == 'U'
-		|| opt.type == 'x' || opt.type == 'X')
+	if (ft_check_charset(opt.type,"pidDoOuUxX"))
 		ret += print_nbr(opt);
 	else if (opt.type == 's' || opt.type == 'S')
 		ret += print_str(opt);
-	else if (opt.type == 'p')
-		ret += print_nbr(opt);
 	else if (opt.type == 'c' || opt.type == 'C')
 		ret += putlong_char(opt.conv);
 	else if (opt.type == '%')
@@ -169,9 +164,9 @@ static int	ft_printf_2(const char *format, ...)
 
 int	main(void)
 {
-	long	a = 92372036854775;
+	long	a = -96854775;
 
-	char	*str = "%hd\n";
+	char	*str = "%d\n";
 	int	ret_ft = ft_printf_2(str, a);
 	int	ret_pf = printf(str, a);
 	printf("returns: -ft %d\t-pf %d\n", ret_ft, ret_pf);

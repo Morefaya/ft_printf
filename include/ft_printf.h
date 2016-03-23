@@ -42,7 +42,7 @@ int					size_base(t_opt opt);
 int					putlong_char(long ch);
 int					putlong_str(long str);
 void					putlong_nbr(long nbr, t_opt opt);
-void					putun_nbr(unsigned long nbr, t_opt opt);
+void					putlun_nbr(unsigned long nbr, t_opt opt);
 
 void				parse_attr(const char **str, t_attr *att);
 void				parse_width(const char **format, t_opt *opt);

@@ -20,14 +20,14 @@ int	size_base(t_opt opt)
 	i = 1;
 	if (opt.type == 'o')
 		base = 8;
-	else if (ft_check_charset(opt.type, "xX"))
+	else if (ft_check_charset(opt.type, "xXp"))
 		base = 16;
 	else
 		base = 10;
-	if (opt.conv < 0)
-	{
+	if (ft_check_charset(opt.type, "id") && (int)opt.conv < 0)
+		opt.conv = (int)opt.conv * -1;
+	else if (!ft_check_charset(opt.type, "di") && opt.conv < 0)
 		opt.conv *= -1;
-	}
 	while (opt.conv >= base)
 	{
 		opt.conv /= base;
