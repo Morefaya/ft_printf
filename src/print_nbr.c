@@ -32,8 +32,8 @@ int	print_zero_left(t_opt opt, int cond)
 	if (opt.attri.zero && !opt.presi && opt.width > opt.presi)
 	{
 		size = opt.width - size_base(opt);
-		if (ft_check_charset(opt.type, "diD"))
-			size = (opt.conv < 0) ? (size - 1) : size;
+		if (check_signe_moins(opt) == -1)
+			size--;
 	}
 	else
 		size = opt.presi - size_base(opt);

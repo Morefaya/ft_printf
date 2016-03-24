@@ -36,6 +36,4 @@ void		parse_pres(const char **format, t_opt *opt)
 		while (ft_check_charset(**format, "1234567890"))
 			(*format)++;
 	}
-	else
-		opt->presi = 0;
 }

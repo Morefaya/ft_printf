@@ -48,6 +48,9 @@ void				putchar_nbr(char nbr);
 
 void				parse_attr(const char **str, t_attr *att);
 void				parse_width(const char **format, t_opt *opt);
+
+void				parse_modifier(const char **format, t_opt *opt);
+
 int					print_nbr(t_opt opt);
 int					print_str(t_opt opt);
 void				parse_pres(const char **format, t_opt *opt);

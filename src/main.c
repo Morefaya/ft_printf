@@ -33,35 +33,6 @@ static void	bzero_opt(t_opt *opt)
 	opt->conv = 0;
 }
 
-static void	parse_modifier(const char **format, t_opt *opt)
-{
-	if (**format == 'l')
-	{
-		if (*(*format + 1) == 'l')
-		{
-			opt->m_len = 'L';
-			(*format)++;
-		}
-		else
-			opt->m_len = 'l';
-	}
-	else if (**format == 'h')
-	{
-		if (*(*format + 1) == 'h')
-		{
-			opt->m_len = 'H';
-			(*format)++;
-		}
-		else
-			opt->m_len = 'h';
-	}
-	else if (**format == 'j')
-		opt->m_len = 'j';
-	else if (**format == 'z')
-		opt->m_len = 'z';
-	(*format)++;
-}
-
 static void	get_conv(const char **format, va_list ap, t_opt *opt)
 {
 	if (ft_check_charset(**format, CONV))
@@ -163,9 +134,9 @@ static int	ft_printf(const char *format, ...)
 
 int	main(void)
 {
-	long	a = 2372065475078900;
+	long	a = -2372065475078900;
 
-	char	*str = "%O\n";
+	char	*str = "%h50#.38hh35.28X\n";
 	int	ret_ft = ft_printf(str, a);
 	int	ret_pf = printf(str, a);
 	printf("returns: -ft %d\t-pf %d\n", ret_ft, ret_pf);

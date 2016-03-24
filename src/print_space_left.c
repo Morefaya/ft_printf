@@ -88,8 +88,11 @@ int		print_space_left(t_opt opt)
 
 	ret = 0;
 	size = opt.width - nbrlen(opt);
-	if ((ft_check_charset(opt.type, "di") && (int)opt.conv < 0)
+	/*if ((ft_check_charset(opt.type, "di") && (int)opt.conv < 0)
 		|| (opt.type == 'D' && opt.conv < 0)
+		|| (ft_check_charset(opt.type, "diDuU") && opt.attri.plus))
+			size--;*/
+	if (check_signe_moins(opt) == -1
 		|| (ft_check_charset(opt.type, "diDuU") && opt.attri.plus))
 			size--;
 	size -= print_prefix(opt, 0);
