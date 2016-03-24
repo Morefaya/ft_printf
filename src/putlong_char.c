@@ -1,10 +1,10 @@
 #include "ft_printf.h"
 
-int	putlong_char(long ch)
+int	putlong_char(long sh)
 {
-	char	sh;
+	char	tmp;
 
-	sh = (char)ch;
-	ft_putchar(sh);
+	tmp = (char)sh;
+	ft_putchar(tmp);
 	return (1);
 }
