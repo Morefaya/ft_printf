@@ -44,6 +44,12 @@ int	print_zero_left(t_opt opt, int cond)
 		ret++;
 		size--;
 	}
+	if (!ret && opt.attri.diez)
+	{
+		if (cond)
+			ft_putchar('0');
+		ret++;
+	}
 	return (ret);
 }
 
@@ -98,17 +104,15 @@ static int	print_choice(t_opt opt)
 	if (opt.type == 'D'
 		|| (opt.type == 'd' && ft_check_charset(opt.m_len, "lL")))
 		putlong_nbr(signe_l * opt.conv, opt);
-	/*else if (opt.type == 'u')
-		putlun_nbr(signe_l * opt.conv, opt);*/
 	else if (opt.type == 'U' || opt.type == 'p'
 		|| (opt.type == 'u' && ft_check_charset(opt.m_len, "lL")))
 		putlun_nbr(opt.conv, opt);
 	else if (opt.type == 'x' || opt.type == 'X')
 		putlong_nbr(opt.conv, opt);
-	else if (opt.type == 'o')
-		putlong_nbr(opt.conv, opt);
+	else if (opt.type == 'o' || opt.type == 'O')
+		putlun_nbr(opt.conv, opt);
 	else
-		ft_putnbr(signe_i * opt.conv);
+		putlong_nbr(signe_i * opt.conv, opt);
 	ret += size_base(opt);
 	return (ret);
 }

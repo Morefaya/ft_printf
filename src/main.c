@@ -96,16 +96,15 @@ static void	modify_len(t_opt *opt)
 {
 	if (ft_check_charset(opt->type, CONV))
 	{
-		if (opt->m_len == 'h')
+		if (ft_check_charset(opt->type, "spDUO")
+			|| ft_check_charset(opt->m_len, "lL"))
+			opt->conv &= opt->conv & 0xffffffffffffffff;
+		else if (opt->m_len == 'h')
 			opt->conv &= opt->conv & 0x000000000000ffff;
 		else if (opt->m_len == 'H')
 			opt->conv &= opt->conv & 0x00000000000000ff;
 		else if (opt->type == 'c')
 			opt->conv &= opt->conv & 0x000000000000000f;
-		else if (opt->m_len == 'l' || opt->m_len == 'L'
-			|| opt->type == 's' || opt->type == 'p'
-			|| opt->type == 'D' || opt->type == 'U')
-			opt->conv &= opt->conv & 0xffffffffffffffff;
 		else
 			opt->conv &= opt->conv & 0x00000000ffffffff;
 	}
@@ -133,7 +132,7 @@ static int	print_var(const char **format, va_list ap)
 	return (ret);
 }
 
-static int	ft_printf_2(const char *format, ...)
+static int	ft_printf(const char *format, ...)
 {
 	char	*next_prc;
 	int		ret;
@@ -164,10 +163,10 @@ static int	ft_printf_2(const char *format, ...)
 
 int	main(void)
 {
-	long	a = -922337203685477580;
+	long	a = -92372036854775;
 
-	char	*str = "%hhu\n";
-	int	ret_ft = ft_printf_2(str, a);
+	char	*str = "%d\n";
+	int	ret_ft = ft_printf(str, a);
 	int	ret_pf = printf(str, a);
 	printf("returns: -ft %d\t-pf %d\n", ret_ft, ret_pf);
 	return (0);

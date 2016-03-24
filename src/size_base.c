@@ -35,23 +35,36 @@ int	size_base(t_opt opt)
 	unsigned long	base;
 
 	i = 1;
-	if (opt.type == 'o')
+	if (ft_check_charset(opt.type, "oO"))
 		base = 8;
 	else if (ft_check_charset(opt.type, "xXp"))
 		base = 16;
 	else
 		base = 10;
 	change_signe(&opt);
-	if (ft_check_charset(opt.type, "uUxXop"))
+	if (ft_check_charset(opt.type, "uUxXoOp"))
 		while ((unsigned long)opt.conv >= base)
 		{
 			opt.conv = (unsigned long)opt.conv / base;
 			i++;
 		}
-	else
+	else if (opt.type == 'D'|| (ft_check_charset(opt.type, "di")
+		&& ft_check_charset(opt.m_len, "lL")))
 		while (opt.conv >= (long)base)
 		{
 			opt.conv /= (long)base;
+			i++;
+		}
+	else if (ft_check_charset(opt.type, "di") && opt.m_len == 'h')
+		while ((short)opt.conv >= (short)base)
+		{
+			opt.conv = (short)opt.conv / (short)base;
+			i++;
+		}
+	else if (ft_check_charset(opt.type, "di") && opt.m_len == 'H')
+		while ((char)opt.conv >= (char)base)
+		{
+			opt.conv = (char)opt.conv / (char)base;
 			i++;
 		}
 	return (i);
