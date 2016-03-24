@@ -6,13 +6,14 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/05 11:30:13 by jcazako           #+#    #+#             */
-/*   Updated: 2016/03/21 22:38:00 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/03/24 21:50:52 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <stdio.h>
 #include <unistd.h>
+#include <locale.h>
 
 static void	bzero_attr(t_opt *opt)
 {
@@ -54,7 +55,7 @@ static int	print(t_opt opt)
 	else if (opt.type == 's' || opt.type == 'S')
 		ret += print_str(opt);
 	else if (opt.type == 'c' || opt.type == 'C')
-		ret += putlong_char(opt.conv);
+		ret += putlong_char(opt);
 	else if (opt.type == '%')
 	{
 		ft_putchar('%');
@@ -72,10 +73,8 @@ static void	modify_len(t_opt *opt)
 			opt->conv &= opt->conv & 0xffffffffffffffff;
 		else if (opt->m_len == 'h')
 			opt->conv &= opt->conv & 0x000000000000ffff;
-		else if (opt->m_len == 'H')
+		else if (opt->m_len == 'H' || opt->type == 'c')
 			opt->conv &= opt->conv & 0x00000000000000ff;
-		else if (opt->type == 'c')
-			opt->conv &= opt->conv & 0x000000000000000f;
 		else
 			opt->conv &= opt->conv & 0x00000000ffffffff;
 	}
@@ -134,9 +133,10 @@ static int	ft_printf(const char *format, ...)
 
 int	main(void)
 {
-	long	a = -2372065475078900;
+	long	a = 0x10ffff;
 
-	char	*str = "%h50#.38hh35.28X\n";
+	char	*str = "%C\n";
+	setlocale(LC_ALL, "");
 	int	ret_ft = ft_printf(str, a);
 	int	ret_pf = printf(str, a);
 	printf("returns: -ft %d\t-pf %d\n", ret_ft, ret_pf);

@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/21 20:03:08 by jcazako           #+#    #+#             */
-/*   Updated: 2016/03/21 22:00:03 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/03/24 21:44:46 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ int	check_signe_moins(t_opt opt)
 			|| (ft_check_charset(opt.m_len, "lL") && opt.conv < 0))
 		return (-1);
 	}
-	else if (opt.type == 'D' && opt.conv < 0)
+	else if ((opt.type == 'D' && opt.conv < 0)
+			|| (opt.type == 'C' && (int)opt.conv < 0))
 		return (-1);
 	return (1);
 }
@@ -88,10 +89,6 @@ int		print_space_left(t_opt opt)
 
 	ret = 0;
 	size = opt.width - nbrlen(opt);
-	/*if ((ft_check_charset(opt.type, "di") && (int)opt.conv < 0)
-		|| (opt.type == 'D' && opt.conv < 0)
-		|| (ft_check_charset(opt.type, "diDuU") && opt.attri.plus))
-			size--;*/
 	if (check_signe_moins(opt) == -1
 		|| (ft_check_charset(opt.type, "diDuU") && opt.attri.plus))
 			size--;
