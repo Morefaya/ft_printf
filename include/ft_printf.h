@@ -18,10 +18,14 @@
 
 # define ATTR "#0-+ "
 # define CONV "sSpdDioOuUxXcC"
-# define U_MASK_0 0
-# define U_MASK_1 49280
-# define U_MASK_2 29393024
-# define U_MASK_3 16114548864
+# define MASK_0	0x7F
+# define MASK_1 0x1F3F
+# define MASK_2 0xF3F3
+# define MASK_3 0x73F3F3F
+# define U_MASK_0 0x0
+# define U_MASK_1 0xC080
+# define U_MASK_2 0xE08080
+# define U_MASK_3 0x638B6380
 
 typedef struct		s_attr
 {
@@ -64,4 +68,7 @@ int					print_zero_left(t_opt opt, int cond);
 int					print_prefix(t_opt opt, int cond);
 int					nbrlen(t_opt opt);
 int					check_signe_moins(t_opt opt);
+
+int					atoi_base(char *str, char *base);
+void				putint_base(int nbr, char *base);
 #endif

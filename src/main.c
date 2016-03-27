@@ -133,7 +133,7 @@ static int	ft_printf(const char *format, ...)
 
 int	main(void)
 {
-	long	a = 0x10ffff;
+	long	a = 945;
 
 	char	*str = "%C\n";
 	setlocale(LC_ALL, "");
