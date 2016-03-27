@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/05 11:30:13 by jcazako           #+#    #+#             */
-/*   Updated: 2016/03/24 21:50:52 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/03/27 16:51:55 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ static int	ft_printf(const char *format, ...)
 
 int	main(void)
 {
-	long	a = 945;
+	long	a = 9450;
 
 	char	*str = "%C\n";
 	setlocale(LC_ALL, "");
