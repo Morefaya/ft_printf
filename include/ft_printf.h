@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/05 14:25:50 by jcazako           #+#    #+#             */
-/*   Updated: 2016/03/24 20:36:16 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/03/27 13:31:10 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # define U_MASK_0 0x0
 # define U_MASK_1 0xC080
 # define U_MASK_2 0xE08080
-# define U_MASK_3 0x638B6380
+# define U_MASK_3 0xF0808080
 
 typedef struct		s_attr
 {

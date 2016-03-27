@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/15 19:42:58 by jcazako           #+#    #+#             */
-/*   Updated: 2016/03/15 21:42:23 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/03/27 14:04:31 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int	size_base(t_opt opt)
 		base = 8;
 	else if (ft_check_charset(opt.type, "xXp"))
 		base = 16;
+	else if (ft_check_charset(opt.type, "CS"))
+			base = 2;
 	else
 		base = 10;
 	change_signe(&opt);
