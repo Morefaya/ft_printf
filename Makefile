@@ -15,17 +15,20 @@ FILE =
 NAME = ft_printf
 .PHONY: re run rr clean fclean all
 
-all: libft/libft.a $(NAME)
+all: $(LDIR)/lib$(LIB).a $(NAME)
 
-libft/libft.a:
-	@make -C ./libft
+$(LDIR)/lib$(LIB).a:
+	@make -C $(LDIR)
 
 fclean_lib:
-	@make fclean -C ./libft
+	@make fclean -C $(LDIR)
 
-$(NAME): $(OBJ_O)
+$(NAME): $(OBJ_DIR) $(OBJ_O)
 	@$(CC) -o $@ -I $(HDIR) -l $(LIB) -L $(LDIR) $(OBJ_O) $(CFLAG)
 	@echo "\033[32m$(NAME) done\033[0m"
+
+$(OBJ_DIR):
+	@mkdir $(OBJ_DIR)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@$(CC) -c $< -o $@ -I $(HDIR) $(CFLAG)

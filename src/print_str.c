@@ -11,36 +11,53 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include <wchar.h>
 
-int		print_str(t_opt opt)
+static void	print_space(t_opt opt, int *ret)
 {
+	int	i;
 	int	size;
-	int i;
-	int	ret;
 
-	ret = 0;
-	size = 0;
 	i = 0;
+	size = 0;
 	if (opt.width)
 	{
 		if (opt.conv)
 			size = ft_strlen((char*)opt.conv);
 		i = opt.width - size;
 	}
+	while (i--)
+	{
+		ft_putchar(' ');
+		ret++;
+	}
+}
+static int	putlong_str(t_opt *opt)
+{
+	int	ret;
+
+	ret = 0;
+	if (opt->conv)
+	{
+		ret += putlong_char(*opt);
+	}
+	return (ret);
+}
+
+int		print_str(t_opt opt)
+{
+	int	ret;
+
+	ret = 0;
 	if (!opt.attri.moins)
-		while (i--)
-		{
-			ft_putchar(' ');
-			ret++;
-		}
-	ft_putstr((char*)opt.conv);
+		print_space(opt, &ret);
+	if (opt.type == 'S')
+		putlong_str(&opt);
+	else
+		ft_putstr((char*)opt.conv);
 	if (opt.conv)
 		ret += ft_strlen((const char*)opt.conv);
 	if (opt.attri.moins)
-		while (i--)
-		{
-			ft_putchar(' ');
-			ret++;
-		}
+		print_space(opt, &ret);
 	return (ret);
 }

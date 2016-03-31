@@ -30,16 +30,19 @@ OBJ = $(patsubst %.c, %.o, $(SRC))
 OBJ_DIR = ./obj
 OBJ_O = $(patsubst %, $(OBJ_DIR)/%, $(OBJ))
 NAME = libft.a
-.PHONY: $(NAME) all clean fclean re
+.PHONY: all clean fclean re
 
-all: $(OBJ_O) $(NAME)
+all: $(NAME)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@$(CC) -c $< -o $@ -I $(HDIR) $(CFLAG)
 
-$(NAME):
+$(NAME): $(OBJ_DIR) $(OBJ_O)
 	@ar -rc $(NAME) $(OBJ_O)
 	@echo "\033[32mlibft compiled\033[0m"
+
+$(OBJ_DIR):
+	@mkdir $(OBJ_DIR)
 
 clean:
 	@rm -rf $(OBJ_O)
