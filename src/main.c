@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/05 11:30:13 by jcazako           #+#    #+#             */
-/*   Updated: 2016/03/27 16:51:55 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/03/31 21:02:04 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <locale.h>
+#include <wchar.h>
 
 static void	bzero_attr(t_opt *opt)
 {
@@ -133,7 +134,9 @@ static int	ft_printf(const char *format, ...)
 
 int	main(void)
 {
-	long	a = 25105;
+	wint_t	b = L'你';
+	long	a = b;
+	a = L'a';
 
 	char	*str = "%C\n";
 	setlocale(LC_ALL, "");

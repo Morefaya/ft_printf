@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/11 14:44:38 by jcazako           #+#    #+#             */
-/*   Updated: 2016/03/15 21:57:11 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/03/31 20:34:16 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,18 @@ static void	print_space(t_opt opt, int *ret)
 		ret++;
 	}
 }
-static int	putlong_str(t_opt *opt)
+/*static int	putlong_str(t_opt opt)
 {
 	int	ret;
 
 	ret = 0;
-	if (opt->conv)
+	if (opt.conv)
 	{
-		ret += putlong_char(*opt);
+		ret += putlong_char(opt);
+		(opt.conv)++;
 	}
 	return (ret);
-}
+}*/
 
 int		print_str(t_opt opt)
 {
@@ -52,7 +53,7 @@ int		print_str(t_opt opt)
 	if (!opt.attri.moins)
 		print_space(opt, &ret);
 	if (opt.type == 'S')
-		putlong_str(&opt);
+		putlong_char(opt);
 	else
 		ft_putstr((char*)opt.conv);
 	if (opt.conv)
