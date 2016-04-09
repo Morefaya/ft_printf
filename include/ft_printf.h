@@ -47,7 +47,7 @@ typedef struct		s_opt
 }					t_opt;
 
 int					size_base(t_opt opt);
-int					putlong_char(t_opt opt);
+int					putlong_char(t_opt opt, int cond);
 
 void				putlong_nbr(long nbr, t_opt opt);
 void				putlun_nbr(unsigned long nbr, t_opt opt);

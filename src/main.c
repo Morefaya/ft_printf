@@ -56,7 +56,7 @@ static int	print(t_opt opt)
 	else if (opt.type == 's' || opt.type == 'S')
 		ret += print_str(opt);
 	else if (opt.type == 'c' || opt.type == 'C')
-		ret += putlong_char(opt);
+		ret += putlong_char(opt, 1);
 	else if (opt.type == '%')
 	{
 		ft_putchar('%');
@@ -69,7 +69,7 @@ static void	modify_len(t_opt *opt)
 {
 	if (ft_check_charset(opt->type, CONV))
 	{
-		if (ft_check_charset(opt->type, "spDUO")
+		if (ft_check_charset(opt->type, "sSpDUO")
 			|| ft_check_charset(opt->m_len, "lL"))
 			opt->conv &= opt->conv & 0xffffffffffffffff;
 		else if (opt->m_len == 'h')
@@ -134,11 +134,10 @@ static int	ft_printf(const char *format, ...)
 
 int	main(void)
 {
-	wint_t	b = L'你';
-	long	a = b;
-	a = L'a';
+	wchar_t	*w = L"я цябе кахаю";
+	long	a = (long)w;
 
-	char	*str = "%C\n";
+	char	*str = "%27S\n";
 	setlocale(LC_ALL, "");
 	int	ret_ft = ft_printf(str, a);
 	int	ret_pf = printf(str, a);

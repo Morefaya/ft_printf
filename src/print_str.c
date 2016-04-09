@@ -13,6 +13,23 @@
 #include "ft_printf.h"
 #include <wchar.h>
 
+static int	putlong_str(t_opt opt, int cond)
+{
+	int	ret;
+	wchar_t	*str;
+
+	ret = 0;
+	str = (int*)opt.conv;
+	while (*str)
+	{
+		opt.conv = *str;
+		opt.type = 'C';
+		ret += putlong_char(opt, cond);
+		str++;
+	}
+	return (ret);
+}
+
 static void	print_space(t_opt opt, int *ret)
 {
 	int	i;
@@ -22,28 +39,19 @@ static void	print_space(t_opt opt, int *ret)
 	size = 0;
 	if (opt.width)
 	{
-		if (opt.conv)
+		if (ft_check_charset(opt.type, "SC") && opt.conv)
+			size = putlong_str(opt, 0);
+		else if (opt.conv)
 			size = ft_strlen((char*)opt.conv);
 		i = opt.width - size;
 	}
-	while (i--)
+	while (i-- > 0)
 	{
 		ft_putchar(' ');
-		ret++;
+		(*ret)++;
 	}
 }
-/*static int	putlong_str(t_opt opt)
-{
-	int	ret;
 
-	ret = 0;
-	if (opt.conv)
-	{
-		ret += putlong_char(opt);
-		(opt.conv)++;
-	}
-	return (ret);
-}*/
 
 int		print_str(t_opt opt)
 {
@@ -53,11 +61,12 @@ int		print_str(t_opt opt)
 	if (!opt.attri.moins)
 		print_space(opt, &ret);
 	if (opt.type == 'S')
-		putlong_char(opt);
+		ret += putlong_str(opt, 1);
 	else
+	{
 		ft_putstr((char*)opt.conv);
-	if (opt.conv)
 		ret += ft_strlen((const char*)opt.conv);
+	}
 	if (opt.attri.moins)
 		print_space(opt, &ret);
 	return (ret);

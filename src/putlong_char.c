@@ -37,16 +37,22 @@ static void	print_c(long ret)
 	if (ret > 0x7F)
 		print_c(ret >> 8);
 	ret &= 0xFF;
-	write(1, &ret, 1);
+	if (ret)
+		write(1, &ret, 1);
 }
 
-static int	deal_c(int mask, t_opt opt)
+static int	deal_c(int mask, t_opt opt, int cond)
 {
 	int	i;
 	long	ret;
 
 	i = 0;
 	ret = 0;
+	if (!opt.conv)
+	{
+		ft_putchar('\0');
+		return (1);
+	}
 	if ((mask = check_mask(opt)) == -1)
 		return (-1);
 	while (i < ft_size_base(mask, 2))
@@ -60,7 +66,8 @@ static int	deal_c(int mask, t_opt opt)
 	}
 	mask = select_u_mask(mask);
 	ret |= mask;
-	print_c(ret);
+	if (cond)
+		print_c(ret);
 	ret = (mask == (int)U_MASK_0) ? 1 : 0;
 	ret = (mask == (int)U_MASK_1) ? 2 : ret;
 	ret = (mask == (int)U_MASK_2) ? 3 : ret;
@@ -68,7 +75,7 @@ static int	deal_c(int mask, t_opt opt)
 	return ((int)ret);
 }
 
-int	putlong_char(t_opt opt)
+int	putlong_char(t_opt opt, int cond)
 {
 	int	mask;
 	long	ret;
@@ -77,10 +84,11 @@ int	putlong_char(t_opt opt)
 	mask = 0;
 	if (opt.type == 'c')
 	{
-		ft_putchar(opt.conv);
+		if (cond)
+			ft_putchar(opt.conv);
 		return (1);
 	}
-	else if (opt.type == 'C')
-		return (deal_c(mask, opt));
+	else if (opt.type == 'C' || opt.type == 'S')
+		return (deal_c(mask, opt, cond));
 	return (0);
 }
