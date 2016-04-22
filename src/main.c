@@ -15,6 +15,7 @@
 #include <unistd.h>
 #include <locale.h>
 #include <wchar.h>
+#include <inttypes.h>
 
 static void	bzero_attr(t_opt *opt)
 {
@@ -70,7 +71,7 @@ static void	modify_len(t_opt *opt)
 	if (ft_check_charset(opt->type, CONV))
 	{
 		if (ft_check_charset(opt->type, "sSpDUO")
-			|| ft_check_charset(opt->m_len, "lL"))
+			|| ft_check_charset(opt->m_len, "lLjz"))
 			opt->conv &= opt->conv & 0xffffffffffffffff;
 		else if (opt->m_len == 'h')
 			opt->conv &= opt->conv & 0x000000000000ffff;
@@ -134,10 +135,10 @@ static int	ft_printf(const char *format, ...)
 
 int	main(void)
 {
-	wchar_t	*w = L"я цябе кахаю";
+	wchar_t	*w = L"ඔබ සුවෙන් ද";
 	long	a = (long)w;
 
-	char	*str = "%27S\n";
+	char	*str = "%zu\n";
 	setlocale(LC_ALL, "");
 	int	ret_ft = ft_printf(str, a);
 	int	ret_pf = printf(str, a);
