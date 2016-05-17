@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/05 14:25:50 by jcazako           #+#    #+#             */
-/*   Updated: 2016/03/27 13:31:10 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/05/17 21:50:14 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,19 @@ void				parse_pres(const char **format, t_opt *opt);
 
 int					print_space_left(t_opt opt);
 int					print_zero_left(t_opt opt, int cond);
-int					print_prefix(t_opt opt, int cond);
-int					nbrlen(t_opt opt);
+
 int					check_signe_moins(t_opt opt);
+int					nbrlen(t_opt opt);
+int					print_prefix(t_opt opt, int cond);
+void				change_signe(t_opt *opt);
+void				print_c(long ret);
 
 int					atoi_base(char *str, char *base);
 void				putint_base(int nbr, char *base);
+
+int					szb_ul(t_opt opt, unsigned long base);
+int					szb_l(t_opt opt, unsigned long base);
+int					szb_s(t_opt opt, unsigned long base);
+int					szb_c(t_opt opt, unsigned long base);
+int					szb_i(t_opt opt, unsigned long base);
 #endif

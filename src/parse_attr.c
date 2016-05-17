@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/11 11:00:00 by jcazako           #+#    #+#             */
-/*   Updated: 2016/03/14 22:17:45 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/05/17 20:13:22 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	init_attr(const char *format, t_attr *attr)
 		attr->space = 1;
 }
 
-void	parse_attr(const char **format, t_attr *attr)
+void		parse_attr(const char **format, t_attr *attr)
 {
 	while (ft_check_charset((char)(**format), ATTR))
 	{

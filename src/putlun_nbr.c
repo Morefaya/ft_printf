@@ -1,4 +1,14 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   putlun_nbr.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/05/17 21:09:43 by jcazako           #+#    #+#             */
+/*   Updated: 2016/05/17 21:10:22 by jcazako          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "ft_printf.h"
 
@@ -12,10 +22,10 @@ static unsigned long	check_base(t_opt opt)
 		return (10);
 }
 
-void	putlun_nbr(unsigned long nbr, t_opt opt)
+void					putlun_nbr(unsigned long nbr, t_opt opt)
 {
 	unsigned long	base;
-	char		*base_set;
+	char			*base_set;
 
 	base = check_base(opt);
 	if (ft_check_charset(opt.type, "xXp"))

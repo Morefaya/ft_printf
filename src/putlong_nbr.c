@@ -1,4 +1,14 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   putlong_nbr.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/05/17 21:08:53 by jcazako           #+#    #+#             */
+/*   Updated: 2016/05/17 21:09:08 by jcazako          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "ft_printf.h"
 
@@ -12,7 +22,7 @@ static long	check_base(t_opt opt)
 		return (10);
 }
 
-void	putlong_nbr(long nbr, t_opt opt)
+void		putlong_nbr(long nbr, t_opt opt)
 {
 	long	base;
 	char	*base_set;

@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/11 14:44:38 by jcazako           #+#    #+#             */
-/*   Updated: 2016/03/31 20:34:16 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/05/17 20:21:37 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 static int	putlong_str(t_opt opt, int cond)
 {
-	int	ret;
+	int		ret;
 	wchar_t	*str;
 
 	ret = 0;
@@ -52,8 +52,7 @@ static void	print_space(t_opt opt, int *ret)
 	}
 }
 
-
-int		print_str(t_opt opt)
+int			print_str(t_opt opt)
 {
 	int	ret;
 

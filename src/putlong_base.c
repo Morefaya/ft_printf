@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_width.c                                      :+:      :+:    :+:   */
+/*   putlong_base.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/03/11 11:42:37 by jcazako           #+#    #+#             */
-/*   Updated: 2016/05/17 20:19:34 by jcazako          ###   ########.fr       */
+/*   Created: 2016/03/15 21:20:33 by jcazako           #+#    #+#             */
+/*   Updated: 2016/05/17 22:09:51 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
-
-void	parse_width(const char **format, t_opt *opt)
+void	putlong_base(long nbr, char *base)
 {
-	int	width;
+	int	len;
+	int	nb_u;
 
-	width = 0;
-	if (ft_check_charset(**format, "-123456789"))
+	len = ft_strlen(base);
+	nb_u = nb;
+	if (nb_u > len - 1)
 	{
-		width = ft_atoi(*format);
-		if (width < 0)
-		{
-			opt->attri.moins = 1;
-			width *= -1;
-		}
-		(*format) += ft_size_base(width, 10);
-		opt->width = width;
+		putlong_base(nb_u / len, base);
+		putlong_base(nb_u % len, base);
+		return ;
 	}
+	ft_putchar(base[nb_u]);
+	return ;
 }

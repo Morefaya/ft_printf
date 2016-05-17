@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   putlong_char.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/05/17 21:43:04 by jcazako           #+#    #+#             */
+/*   Updated: 2016/05/17 22:01:45 by jcazako          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 #include <wchar.h>
 #include <unistd.h>
@@ -5,7 +17,7 @@
 static int	check_mask(t_opt opt)
 {
 	int	size;
- 
+
 	if ((int)opt.conv < 0 || opt.conv > 0x10FFFF)
 		return (-1);
 	size = size_base(opt);
@@ -32,18 +44,22 @@ static int	select_u_mask(int mask)
 	return (0);
 }
 
-static void	print_c(long ret)
+static void	help_deal_c(t_opt opt, int *i, long *ret, int mask)
 {
-	if (ret > 0x7F)
-		print_c(ret >> 8);
-	ret &= 0xFF;
-	if (ret)
-		write(1, &ret, 1);
+	while (*i < ft_size_base(mask, 2))
+	{
+		if (mask & ft_pow(2, *i))
+		{
+			(*ret) |= ((0x1 & opt.conv) << *i);
+			opt.conv >>= 1;
+		}
+		(*i)++;
+	}
 }
 
 static int	deal_c(int mask, t_opt opt, int cond)
 {
-	int	i;
+	int		i;
 	long	ret;
 
 	i = 0;
@@ -55,15 +71,7 @@ static int	deal_c(int mask, t_opt opt, int cond)
 	}
 	if ((mask = check_mask(opt)) == -1)
 		return (-1);
-	while (i < ft_size_base(mask, 2))
-	{
-		if (mask & ft_pow(2, i))
-		{
-			ret |= ((0x1 & opt.conv) << i);
-			opt.conv >>= 1;
-		}
-		i++;
-	}
+	help_deal_c(opt, &i, &ret, mask);
 	mask = select_u_mask(mask);
 	ret |= mask;
 	if (cond)
@@ -75,9 +83,9 @@ static int	deal_c(int mask, t_opt opt, int cond)
 	return ((int)ret);
 }
 
-int	putlong_char(t_opt opt, int cond)
+int			putlong_char(t_opt opt, int cond)
 {
-	int	mask;
+	int		mask;
 	long	ret;
 
 	ret = 0;
