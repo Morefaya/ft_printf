@@ -1,40 +1,9 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/03/05 11:30:13 by jcazako           #+#    #+#             */
-/*   Updated: 2016/03/31 21:02:04 by jcazako          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "ft_printf.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <locale.h>
 #include <wchar.h>
 #include <inttypes.h>
-
-static void	bzero_attr(t_opt *opt)
-{
-	opt->attri.diez = 0;
-	opt->attri.zero = 0;
-	opt->attri.moins = 0;
-	opt->attri.plus = 0;
-	opt->attri.space = 0;
-}
-
-static void	bzero_opt(t_opt *opt)
-{
-	bzero_attr(opt);
-	opt->width = 0;
-	opt->presi = 0;
-	opt->m_len = '\0';
-	opt->type = '\0';
-	opt->conv = 0;
-}
 
 static void	get_conv(const char **format, va_list ap, t_opt *opt)
 {
@@ -104,7 +73,7 @@ static int	print_var(const char **format, va_list ap)
 	return (ret);
 }
 
-static int	ft_printf(const char *format, ...)
+int	ft_printf(const char *format, ...)
 {
 	char	*next_prc;
 	int		ret;
@@ -131,17 +100,4 @@ static int	ft_printf(const char *format, ...)
 	}
 	va_end(ap);
 	return (ret);
-}
-
-int	main(void)
-{
-	wchar_t	*w = L"ඔබ සුවෙන් ද";
-	long	a = (long)w;
-
-	char	*str = "%zu\n";
-	setlocale(LC_ALL, "");
-	int	ret_ft = ft_printf(str, a);
-	int	ret_pf = printf(str, a);
-	printf("returns: -ft %d\t-pf %d\n", ret_ft, ret_pf);
-	return (0);
 }

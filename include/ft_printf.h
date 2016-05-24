@@ -80,4 +80,8 @@ int					szb_l(t_opt opt, unsigned long base);
 int					szb_s(t_opt opt, unsigned long base);
 int					szb_c(t_opt opt, unsigned long base);
 int					szb_i(t_opt opt, unsigned long base);
+
+void				bzero_attr(t_opt *opt);
+void				bzero_opt(t_opt *opt);
+int				ft_printf(const char *format, ...);
 #endif
