@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/05/27 18:48:08 by jcazako           #+#    #+#             */
+/*   Updated: 2016/05/27 18:51:19 by jcazako          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 #include <stdio.h>
 #include <unistd.h>
@@ -21,7 +33,7 @@ static int	print(t_opt opt)
 	int		ret;
 
 	ret = 0;
-	if (ft_check_charset(opt.type,"pidDoOuUxX"))
+	if (ft_check_charset(opt.type, "pidDoOuUxX"))
 		ret += print_nbr(opt);
 	else if (opt.type == 's' || opt.type == 'S')
 		ret += print_str(opt);
@@ -73,7 +85,7 @@ static int	print_var(const char **format, va_list ap)
 	return (ret);
 }
 
-int	ft_printf(const char *format, ...)
+int			ft_printf(const char *format, ...)
 {
 	char	*next_prc;
 	int		ret;
@@ -82,7 +94,7 @@ int	ft_printf(const char *format, ...)
 	ret = 0;
 	va_start(ap, format);
 	while (*format)
-	{		
+	{
 		if ((next_prc = ft_strchr(format, '%')))
 		{
 			write(1, format, next_prc - format);
@@ -94,7 +106,7 @@ int	ft_printf(const char *format, ...)
 			ft_putstr(format);
 			ret += ft_strlen(format);
 			format += ft_strlen(format) + 1;
-			break;
+			break ;
 		}
 		ret += print_var(&format, ap);
 	}

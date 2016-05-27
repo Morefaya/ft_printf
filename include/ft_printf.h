@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/05 14:25:50 by jcazako           #+#    #+#             */
-/*   Updated: 2016/05/17 21:50:14 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/05/27 18:47:30 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,5 @@ int					szb_i(t_opt opt, unsigned long base);
 
 void				bzero_attr(t_opt *opt);
 void				bzero_opt(t_opt *opt);
-int				ft_printf(const char *format, ...);
+int					ft_printf(const char *format, ...);
 #endif
