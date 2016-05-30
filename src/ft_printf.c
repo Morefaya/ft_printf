@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/27 18:48:08 by jcazako           #+#    #+#             */
-/*   Updated: 2016/05/27 18:51:19 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/05/30 15:20:43 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,27 +24,6 @@ static void	get_conv(const char **format, va_list ap, t_opt *opt)
 		opt->conv = va_arg(ap, long);
 		opt->type = **format;
 	}
-	else if (**format == '%')
-		opt->type = '%';
-}
-
-static int	print(t_opt opt)
-{
-	int		ret;
-
-	ret = 0;
-	if (ft_check_charset(opt.type, "pidDoOuUxX"))
-		ret += print_nbr(opt);
-	else if (opt.type == 's' || opt.type == 'S')
-		ret += print_str(opt);
-	else if (opt.type == 'c' || opt.type == 'C')
-		ret += putlong_char(opt, 1);
-	else if (opt.type == '%')
-	{
-		ft_putchar('%');
-		ret++;
-	}
-	return (ret);
 }
 
 static void	modify_len(t_opt *opt)
@@ -85,6 +64,18 @@ static int	print_var(const char **format, va_list ap)
 	return (ret);
 }
 
+static void	deal_percent(const char **format, va_list ap, int *ret)
+{
+	if (**format != '%')
+		(*ret) += print_var(format, ap);
+	else
+	{
+		ft_putchar('%');
+		(*format)++;
+		(*ret)++;
+	}
+}
+
 int			ft_printf(const char *format, ...)
 {
 	char	*next_prc;
@@ -108,7 +99,7 @@ int			ft_printf(const char *format, ...)
 			format += ft_strlen(format) + 1;
 			break ;
 		}
-		ret += print_var(&format, ap);
+		deal_percent(&format, ap, &ret);
 	}
 	va_end(ap);
 	return (ret);

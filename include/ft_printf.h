@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/05 14:25:50 by jcazako           #+#    #+#             */
-/*   Updated: 2016/05/27 18:47:30 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/05/30 14:48:13 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <stdarg.h>
 
 # define ATTR "#0-+ "
-# define CONV "sSpdDioOuUxXcC%"
+# define CONV "sSpdDioOuUxXcC"
 # define MASK_0	0x7F
 # define MASK_1 0x1F3F
 # define MASK_2 0xF3F3F
@@ -83,5 +83,6 @@ int					szb_i(t_opt opt, unsigned long base);
 
 void				bzero_attr(t_opt *opt);
 void				bzero_opt(t_opt *opt);
+int					print(t_opt opt);
 int					ft_printf(const char *format, ...);
 #endif
