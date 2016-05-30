@@ -17,7 +17,7 @@
 # include <stdarg.h>
 
 # define ATTR "#0-+ "
-# define CONV "sSpdDioOuUxXcC"
+# define CONV "sSpdDioOuUxXcC%"
 # define MASK_0	0x7F
 # define MASK_1 0x1F3F
 # define MASK_2 0xF3F3F
