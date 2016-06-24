@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 21:43:04 by jcazako           #+#    #+#             */
-/*   Updated: 2016/05/17 22:01:45 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/06/24 19:03:39 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,7 @@ static int	deal_c(int mask, t_opt opt, int cond)
 int			putlong_char(t_opt opt, int cond)
 {
 	int		mask;
-	long	ret;
 
-	ret = 0;
 	mask = 0;
 	if (opt.type == 'c' && opt.m_len != 'l')
 	{
@@ -98,6 +96,6 @@ int			putlong_char(t_opt opt, int cond)
 	}
 	else if (opt.type == 'C' || opt.type == 'S'
 		|| (opt.type == 'c' && opt.m_len == 'l'))
-		return (deal_c(mask, opt, cond));
+		return(deal_c(mask, opt, cond));
 	return (0);
 }

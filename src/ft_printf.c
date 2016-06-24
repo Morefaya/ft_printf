@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/27 18:48:08 by jcazako           #+#    #+#             */
-/*   Updated: 2016/05/30 15:20:43 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/06/24 20:15:54 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,11 @@ static int	print_var(const char **format, va_list ap)
 	int		ret;
 	t_opt	opt;
 	int	conv;
+	int		i;
 
 	bzero_opt(&opt);
 	conv = 0;
+	i = 0;
 	while (!ft_check_charset(**format, CONV))
 	{
 		ret = 0;
@@ -75,7 +77,15 @@ static int	print_var(const char **format, va_list ap)
 			break ;
 	}
 	if (!(conv = get_conv(format, ap, &opt)))
-		return (0);
+	{
+		if (opt.width)
+		{
+			while (i++ < opt.width - 1)
+				ft_putchar(' ');
+			ret += --i;
+		}
+		return (ret);
+	}
 	else if (conv == 2)
 		return (1);
 	modify_len(&opt);

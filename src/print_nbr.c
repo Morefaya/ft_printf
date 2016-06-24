@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/11 13:30:19 by jcazako           #+#    #+#             */
-/*   Updated: 2016/05/17 21:37:44 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/06/24 21:10:48 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,10 @@ static int	print_choice(t_opt opt)
 	signe_l = (opt.conv < 0) ? -1 : 1;
 	signe_i = ((int)opt.conv < 0) ? -1 : 1;
 	ret = 0;
+	//if (ft_check_charset(opt.type, "id") && !opt.presi && !opt.conv)
+	//		return (0);
 	if (opt.type == 'D' || (ft_check_charset(opt.type, "id")
-				&& ft_check_charset(opt.m_len, "lL")))
+				&& ft_check_charset(opt.m_len, "lLjz")))
 		putlong_nbr(signe_l * opt.conv, &ret);
 	else if (ft_check_charset(opt.type, "di") && opt.m_len == 'h')
 		putshort_nbr(opt.conv, &ret);

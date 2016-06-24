@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 20:55:52 by jcazako           #+#    #+#             */
-/*   Updated: 2016/05/17 22:02:37 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/06/24 18:25:13 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ int		check_signe_moins(t_opt opt)
 		if ((!opt.m_len && (int)opt.conv < 0)
 			|| (opt.m_len == 'h' && (short)opt.conv < 0)
 			|| (opt.m_len == 'H' && (char)opt.conv < 0)
-			|| (ft_check_charset(opt.m_len, "lL") && opt.conv < 0))
+			|| (ft_check_charset(opt.m_len, "lL") && opt.conv < 0)
+			|| (opt.m_len == 'j' && opt.conv < 0))
 			return (-1);
 	}
 	else if ((opt.type == 'D' && opt.conv < 0)
