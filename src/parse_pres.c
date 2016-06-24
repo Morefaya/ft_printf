@@ -12,28 +12,26 @@
 
 #include "ft_printf.h"
 
-void		parse_pres(const char **format, t_opt *opt)
+int		parse_pres(const char **format, t_opt *opt)
 {
 	int	pres;
-	int	tmp;
+	int	ret;
 
 	pres = 0;
-	tmp = 0;
+	ret = 0;
 	if (**format == '.')
 		(*format)++;
 	if (ft_check_charset(**format, "-1234567890"))
 	{
+		ret = 1;
 		pres = ft_atoi(*format);
-		tmp = pres;
 		if (pres < 0)
-		{
-			tmp *= -1;
 			pres = 0;
-		}
 		opt->presi = pres;
 		if (**format == '-')
 			(*format)++;
 		while (ft_check_charset(**format, "1234567890"))
 			(*format)++;
 	}
+	return (ret);
 }

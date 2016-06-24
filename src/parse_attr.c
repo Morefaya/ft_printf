@@ -12,8 +12,12 @@
 
 #include "ft_printf.h"
 
-static void	init_attr(const char *format, t_attr *attr)
+static int	init_attr(const char *format, t_attr *attr)
 {
+	int	ret;
+	ret = 0;
+	if (ft_check_charset(*format, "#0-+ "))
+		ret = 1;
 	if (*format == '#')
 		attr->diez = 1;
 	else if (*format == '0')
@@ -24,13 +28,20 @@ static void	init_attr(const char *format, t_attr *attr)
 		attr->plus = 1;
 	else if (*format == ' ')
 		attr->space = 1;
+	return (ret);
 }
 
-void		parse_attr(const char **format, t_attr *attr)
+int		parse_attr(const char **format, t_attr *attr)
 {
+	int	ret;
+
+	ret = 0;
 	while (ft_check_charset((char)(**format), ATTR))
 	{
-		init_attr(*format, attr);
+
+		if (init_attr(*format, attr))
+			ret = 1;
 		(*format)++;
 	}
+	return (ret);
 }

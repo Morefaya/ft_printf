@@ -22,7 +22,7 @@ static unsigned long	check_base(t_opt opt)
 		return (10);
 }
 
-void					putlun_nbr(unsigned long nbr, t_opt opt)
+void			putlun_nbr(unsigned long nbr, t_opt opt, int *ret)
 {
 	unsigned long	base;
 	char			*base_set;
@@ -37,9 +37,12 @@ void					putlun_nbr(unsigned long nbr, t_opt opt)
 		base_set = "0123456789";
 	if (nbr > base - 1)
 	{
-		putlun_nbr(nbr / base, opt);
-		putlun_nbr(nbr % base, opt);
+		putlun_nbr(nbr / base, opt, ret);
+		putlun_nbr(nbr % base, opt, ret);
 	}
 	else
+	{
 		ft_putchar(base_set[nbr]);
+		(*ret)++;
+	}
 }

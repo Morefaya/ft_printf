@@ -90,13 +90,14 @@ int			putlong_char(t_opt opt, int cond)
 
 	ret = 0;
 	mask = 0;
-	if (opt.type == 'c')
+	if (opt.type == 'c' && opt.m_len != 'l')
 	{
 		if (cond)
 			ft_putchar(opt.conv);
 		return (1);
 	}
-	else if (opt.type == 'C' || opt.type == 'S')
+	else if (opt.type == 'C' || opt.type == 'S'
+		|| (opt.type == 'c' && opt.m_len == 'l'))
 		return (deal_c(mask, opt, cond));
 	return (0);
 }

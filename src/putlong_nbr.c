@@ -12,34 +12,22 @@
 
 #include "ft_printf.h"
 
-static long	check_base(t_opt opt)
+void		putlong_nbr(long nbr, int *ret)
 {
-	if (ft_check_charset(opt.type, "xXp"))
-		return (16);
-	else if (ft_check_charset(opt.type, "oO"))
-		return (8);
-	else
-		return (10);
-}
-
-void		putlong_nbr(long nbr, t_opt opt)
-{
-	long	base;
-	char	*base_set;
-
-	base = check_base(opt);
-	if (opt.type == 'x' || opt.type == 'X')
-		base_set = (opt.type == 'x') ?
-			"0123456789abcdef" : "0123456789ABCDEF";
-	else if (opt.type == 'o' || opt.type == 'O')
-		base_set = "01234567";
-	else
-		base_set = "0123456789";
-	if (nbr > base - 1)
+	if (nbr == LONG_MIN)
 	{
-		putlong_nbr(nbr / base, opt);
-		putlong_nbr(nbr % base, opt);
+		ft_putstr("9223372036854775808");
+		(*ret) += 19;
+		return ;
+	}
+	if (nbr > 9)
+	{
+		putlong_nbr(nbr / 10, ret);
+		putlong_nbr(nbr % 10, ret);
 	}
 	else
-		ft_putchar(base_set[nbr]);
+	{
+		ft_putchar('0' + nbr);
+		(*ret)++;
+	}
 }

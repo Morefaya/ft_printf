@@ -73,21 +73,20 @@ static int	print_choice(t_opt opt)
 	signe_i = ((int)opt.conv < 0) ? -1 : 1;
 	ret = 0;
 	if (opt.type == 'D' || (ft_check_charset(opt.type, "id")
-		&& ft_check_charset(opt.m_len, "lL")))
-		putlong_nbr(signe_l * opt.conv, opt);
+				&& ft_check_charset(opt.m_len, "lL")))
+		putlong_nbr(signe_l * opt.conv, &ret);
 	else if (ft_check_charset(opt.type, "di") && opt.m_len == 'h')
-		putshort_nbr(opt.conv);
+		putshort_nbr(opt.conv, &ret);
 	else if (ft_check_charset(opt.type, "di") && opt.m_len == 'H')
-		putchar_nbr(opt.conv);
+		putchar_nbr(opt.conv, &ret);
 	else if (ft_check_charset(opt.type, "Upu"))
-		putlun_nbr(opt.conv, opt);
+		putlun_nbr(opt.conv, opt, &ret);
 	else if (opt.type == 'x' || opt.type == 'X')
-		putlong_nbr(opt.conv, opt);
+		putlong_base(opt.conv, opt, &ret);
 	else if (opt.type == 'o' || opt.type == 'O')
-		putlun_nbr(opt.conv, opt);
+		putlun_nbr(opt.conv, opt, &ret);
 	else
-		ft_putnbr(signe_i * opt.conv);
-	ret += size_base(opt);
+		putnbr(signe_i * opt.conv, &ret);
 	return (ret);
 }
 

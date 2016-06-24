@@ -17,13 +17,20 @@
 #include <wchar.h>
 #include <inttypes.h>
 
-static void	get_conv(const char **format, va_list ap, t_opt *opt)
+static int	get_conv(const char **format, va_list ap, t_opt *opt)
 {
 	if (ft_check_charset(**format, CONV))
 	{
 		opt->conv = va_arg(ap, long);
 		opt->type = **format;
+		return (1);
 	}
+	else if (**format == '%')
+	{
+		ft_putchar('%');
+		return (2);
+	}
+	return (0);
 }
 
 static void	modify_len(t_opt *opt)
@@ -46,18 +53,31 @@ static int	print_var(const char **format, va_list ap)
 {
 	int		ret;
 	t_opt	opt;
+	int	conv;
 
-	ret = 0;
 	bzero_opt(&opt);
+	conv = 0;
 	while (!ft_check_charset(**format, CONV))
 	{
-		parse_attr(format, &(opt.attri));
-		parse_width(format, &opt);
-		parse_pres(format, &opt);
+		ret = 0;
+		if (parse_attr(format, &(opt.attri)))
+			ret = 1;
+		if (parse_width(format, &opt))
+			ret = 1;
+		if (parse_pres(format, &opt))
+			ret = 1;
 		if (ft_check_charset(**format, "lhjz"))
-			parse_modifier(format, &opt);
+		{
+			if (parse_modifier(format, &opt))
+				ret = 1;
+		}
+		if (!ret)
+			break ;
 	}
-	get_conv(format, ap, &opt);
+	if (!(conv = get_conv(format, ap, &opt)))
+		return (0);
+	else if (conv == 2)
+		return (1);
 	modify_len(&opt);
 	ret = print(opt);
 	(*format)++;
@@ -84,6 +104,8 @@ int			ft_printf(const char *format, ...)
 
 	ret = 0;
 	va_start(ap, format);
+	if (!(ft_strcmp(format, "%")))
+		return (0);
 	while (*format)
 	{
 		if ((next_prc = ft_strchr(format, '%')))

@@ -57,9 +57,14 @@ int			print_str(t_opt opt)
 	int	ret;
 
 	ret = 0;
+	if (!opt.conv)
+	{
+		ft_putstr("(null)");
+		return (6);
+	}
 	if (!opt.attri.moins)
 		print_space(opt, &ret);
-	if (opt.type == 'S')
+	if (opt.type == 'S' || (opt.type == 's' && opt.m_len == 'l'))
 		ret += putlong_str(opt, 1);
 	else
 	{

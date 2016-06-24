@@ -12,8 +12,13 @@
 
 #include "ft_printf.h"
 
-void	parse_modifier(const char **format, t_opt *opt)
+int	parse_modifier(const char **format, t_opt *opt)
 {
+	int	ret;
+
+	ret = 0;
+	if (ft_check_charset(**format, "lhjz"))
+		ret = 1;
 	if (**format == 'l')
 	{
 		if (opt->m_len == 'l')
@@ -33,4 +38,5 @@ void	parse_modifier(const char **format, t_opt *opt)
 	else if (**format == 'z')
 		opt->m_len = 'z';
 	(*format)++;
+	return (ret);
 }

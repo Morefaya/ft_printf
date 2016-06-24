@@ -1,35 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   putshort_nbr.c                                     :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/05/17 21:11:16 by jcazako           #+#    #+#             */
-/*   Updated: 2016/05/17 21:11:19 by jcazako          ###   ########.fr       */
+/*   Created: 2015/11/28 13:23:12 by jcazako           #+#    #+#             */
+/*   Updated: 2015/12/07 17:02:23 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-void	putshort_nbr(short nbr, int *ret)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	if (nbr == SHRT_MIN)
+	unsigned char	*s1_i;
+	unsigned char	*s2_i;
+	size_t			i;
+
+	s1_i = (unsigned char*)s1;
+	s2_i = (unsigned char*)s2;
+	i = 0;
+	while (s1_i[i] && s2_i[i] && s1_i[i] == s2_i[i])
 	{
-		ft_putstr("32768");
-		(*ret) += 5;
-		return ;
+		i++;
 	}
-	if (nbr < 0)
-		nbr *= -1;
-	if (nbr > 9)
-	{
-		putshort_nbr(nbr / 10, ret);
-		putshort_nbr(nbr % 10, ret);
-	}
-	else
-	{
-		ft_putchar('0' + nbr);
-		(*ret)++;
-	}
+	return ((s1_i[i] - s2_i[i]));
 }

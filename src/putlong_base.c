@@ -1,28 +1,40 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   putlong_base.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/03/15 21:20:33 by jcazako           #+#    #+#             */
-/*   Updated: 2016/05/17 22:09:51 by jcazako          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
-void	putlong_base(long nbr, char *base)
+
+#include "ft_printf.h"
+
+static long	check_base(t_opt opt)
 {
-	int	len;
-	int	nb_u;
+	if (ft_check_charset(opt.type, "xXp"))
+		return (16);
+	else if (ft_check_charset(opt.type, "oO"))
+		return (8);
+	else
+		return (10);
+}
 
-	len = ft_strlen(base);
-	nb_u = nb;
-	if (nb_u > len - 1)
+void		putlong_base(long nbr, t_opt opt, int *ret)
+{
+	unsigned long	base;
+	char	*base_set;
+	unsigned long	n;
+
+	base = check_base(opt);
+	n = nbr;
+	if (opt.type == 'x' || opt.type == 'X')
+		base_set = (opt.type == 'x') ?
+			"0123456789abcdef" : "0123456789ABCDEF";
+	else if (opt.type == 'o' || opt.type == 'O')
+		base_set = "01234567";
+	else
+		base_set = "0123456789";
+	if (n > base - 1)
 	{
-		putlong_base(nb_u / len, base);
-		putlong_base(nb_u % len, base);
-		return ;
+		putlong_base(n / base, opt, ret);
+		putlong_base(n % base, opt, ret);
 	}
-	ft_putchar(base[nb_u]);
-	return ;
+	else
+	{
+		ft_putchar(base_set[n]);
+		(*ret)++;
+	}
 }

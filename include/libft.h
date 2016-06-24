@@ -6,13 +6,20 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/27 18:27:44 by jcazako           #+#    #+#             */
-/*   Updated: 2016/02/19 18:19:49 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/06/11 16:30:10 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
+
+# define BASE_HEX_A "0123456789abcdef"
+# define BASE_HEX_B "0123456789ABCDEF"
+# define BASE_OCT "01234567"
+# define BASE_10 "0123456789"
+
 # include <string.h>
+# include "get_next_line.h"
 
 typedef struct		s_list
 {
@@ -89,6 +96,14 @@ int					ft_size_base(int nbr, int base);
 int					ft_sqrt(int nb);
 void				ft_putstr_left(char *str, int width);
 void				ft_putstr_right(char *str, int width);
-void				ft_putendchar(char *str, char a);
-
+void				ft_putendstr(char *str, char a);
+int					ft_getnbr(const char *str);
+int					ft_strisnum(const char *str);
+int					ft_select_charset(char ch, const char *charset);
+char				**ft_strstr_split(const char *str, char *charset);
+void				ft_lstadd_back(t_list *lst, t_list *n_lst);
+int					ft_wordnb(char *str);
+int					ft_strlen_str(char *str);
+char				*ft_clean(char *str);
+int					ft_lstcount(t_list *lst);
 #endif

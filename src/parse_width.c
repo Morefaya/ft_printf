@@ -12,13 +12,16 @@
 
 #include "ft_printf.h"
 
-void	parse_width(const char **format, t_opt *opt)
+int	parse_width(const char **format, t_opt *opt)
 {
 	int	width;
+	int	ret;
 
 	width = 0;
+	ret = 0;
 	if (ft_check_charset(**format, "-123456789"))
 	{
+		ret = 1;
 		width = ft_atoi(*format);
 		if (width < 0)
 		{
@@ -28,4 +31,5 @@ void	parse_width(const char **format, t_opt *opt)
 		(*format) += ft_size_base(width, 10);
 		opt->width = width;
 	}
+	return (ret);
 }

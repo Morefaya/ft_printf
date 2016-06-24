@@ -12,15 +12,24 @@
 
 #include "ft_printf.h"
 
-void	putchar_nbr(char nbr)
+void	putchar_nbr(char nbr, int *ret)
 {
+	if (nbr == CHAR_MIN)
+	{
+		ft_putstr("128");
+		(*ret) += 3;
+		return ;
+	}
 	if (nbr < 0)
 		nbr *= -1;
 	if (nbr > 9)
 	{
-		putchar_nbr(nbr / 10);
-		putchar_nbr(nbr % 10);
+		putchar_nbr(nbr / 10, ret);
+		putchar_nbr(nbr % 10, ret);
 	}
 	else
+	{
 		ft_putchar('0' + nbr);
+		(*ret)++;
+	}
 }
