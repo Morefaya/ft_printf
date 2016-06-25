@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/11 14:44:38 by jcazako           #+#    #+#             */
-/*   Updated: 2016/05/17 20:21:37 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/06/25 18:44:28 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,23 @@ static void	print_space(t_opt opt, int *ret)
 int			print_str(t_opt opt)
 {
 	int	ret;
+	int	i;
 
 	ret = 0;
+	i = 0;
 	if (!opt.conv)
 	{
-		ft_putstr("(null)");
-		return (6);
+		if (opt.attri.zero)
+		{
+			while (i++ < opt.width)
+				ft_putchar('0');
+			return (opt.width);
+		}
+		else
+		{
+			ft_putstr("(null)");
+			return (6);
+		}
 	}
 	if (!opt.attri.moins)
 		print_space(opt, &ret);

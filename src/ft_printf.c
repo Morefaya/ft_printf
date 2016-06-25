@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/27 18:48:08 by jcazako           #+#    #+#             */
-/*   Updated: 2016/06/24 20:15:54 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/06/25 20:13:47 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,20 @@
 
 static int	get_conv(const char **format, va_list ap, t_opt *opt)
 {
+	int	i;
+
+	i = 0;
 	if (ft_check_charset(**format, CONV))
 	{
 		opt->conv = va_arg(ap, long);
 		opt->type = **format;
 		return (1);
 	}
-	else if (**format == '%')
+	/*else if (**format == '%')
 	{
-		ft_putchar('%');
+		opt.type = '%';
 		return (2);
-	}
+	}*/
 	return (0);
 }
 
@@ -81,13 +84,21 @@ static int	print_var(const char **format, va_list ap)
 		if (opt.width)
 		{
 			while (i++ < opt.width - 1)
-				ft_putchar(' ');
+			{
+				if (!opt.pres_on)
+					ft_putchar(' ');
+				else
+					ft_putchar('0');
+			}
 			ret += --i;
 		}
+		ft_putchar(**format);
+		ret++;
+		(*format)++;
 		return (ret);
 	}
-	else if (conv == 2)
-		return (1);
+	/*else if (conv == 2)
+		return (1);*/
 	modify_len(&opt);
 	ret = print(opt);
 	(*format)++;

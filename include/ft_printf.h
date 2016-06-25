@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/05 14:25:50 by jcazako           #+#    #+#             */
-/*   Updated: 2016/05/30 14:48:13 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/06/25 17:30:17 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct		s_opt
 {
 	t_attr			attri;
 	int				width;
+	int				pres_on;
 	int				presi;
 	char			m_len;
 	char			type;

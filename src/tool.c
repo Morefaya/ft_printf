@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 20:55:52 by jcazako           #+#    #+#             */
-/*   Updated: 2016/06/24 18:25:13 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/06/25 17:15:03 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int		check_signe_moins(t_opt opt)
 			|| (opt.m_len == 'h' && (short)opt.conv < 0)
 			|| (opt.m_len == 'H' && (char)opt.conv < 0)
 			|| (ft_check_charset(opt.m_len, "lL") && opt.conv < 0)
-			|| (opt.m_len == 'j' && opt.conv < 0))
+			|| (opt.m_len == 'j' && opt.conv < 0)
+			|| (opt.m_len == 'z' && opt.conv < 0))
 			return (-1);
 	}
 	else if ((opt.type == 'D' && opt.conv < 0)
@@ -60,6 +61,8 @@ void	change_signe(t_opt *opt)
 
 int		print_prefix(t_opt opt, int cond)
 {
+	if (!opt.conv && opt.type != 'p')
+		return (0);
 	if ((ft_check_charset(opt.type, "xX") && opt.attri.diez) || opt.type == 'p')
 	{
 		if (cond)
@@ -71,12 +74,14 @@ int		print_prefix(t_opt opt, int cond)
 		}
 		return (2);
 	}
+	else
+		print_zero_left(opt, 0);
+	/*
 	else if (opt.type == 'o' && !print_zero_left(opt, 0) && opt.attri.diez)
 	{
-		if (cond)
-			ft_putchar('0');
-		return (1);
-	}
+
+		return (0);
+	}*/
 	return (0);
 }
 

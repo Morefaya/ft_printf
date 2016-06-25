@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/11 13:30:19 by jcazako           #+#    #+#             */
-/*   Updated: 2016/06/24 21:10:48 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/06/25 17:46:32 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int			print_zero_left(t_opt opt, int cond)
 
 	ret = 0;
 	if (opt.attri.zero && !opt.presi && opt.width > opt.presi)
+	//if (opt.attri.zero && !opt.presi && opt.width)
 	{
 		size = opt.width - size_base(opt);
 		if (check_signe_moins(opt) == -1)
@@ -40,9 +41,11 @@ int			print_zero_left(t_opt opt, int cond)
 	deal_zero(&size, &ret, cond);
 	if (!ret && opt.attri.diez && ft_check_charset(opt.type, "oO"))
 	{
-		if (cond)
+		if (cond && opt.conv)
+		{
 			ft_putchar('0');
-		ret++;
+			ret++;
+		}
 	}
 	return (ret);
 }
@@ -72,8 +75,6 @@ static int	print_choice(t_opt opt)
 	signe_l = (opt.conv < 0) ? -1 : 1;
 	signe_i = ((int)opt.conv < 0) ? -1 : 1;
 	ret = 0;
-	//if (ft_check_charset(opt.type, "id") && !opt.presi && !opt.conv)
-	//		return (0);
 	if (opt.type == 'D' || (ft_check_charset(opt.type, "id")
 				&& ft_check_charset(opt.m_len, "lLjz")))
 		putlong_nbr(signe_l * opt.conv, &ret);
@@ -81,14 +82,26 @@ static int	print_choice(t_opt opt)
 		putshort_nbr(opt.conv, &ret);
 	else if (ft_check_charset(opt.type, "di") && opt.m_len == 'H')
 		putchar_nbr(opt.conv, &ret);
-	else if (ft_check_charset(opt.type, "Upu"))
+	else if (ft_check_charset(opt.type, "Uup"))
+	{
+		if (!opt.conv && opt.pres_on && !opt.presi)
+			return (0);
 		putlun_nbr(opt.conv, opt, &ret);
-	else if (opt.type == 'x' || opt.type == 'X')
-		putlong_base(opt.conv, opt, &ret);
+	}
+	else if (ft_check_charset(opt.type, "xX"))
+	{
+		if (!opt.conv && opt.pres_on && !opt.presi)
+			return (0);
+		putlun_nbr(opt.conv, opt, &ret);
+	}
 	else if (opt.type == 'o' || opt.type == 'O')
 		putlun_nbr(opt.conv, opt, &ret);
 	else
+	{
+		if (!opt.conv && !opt.presi)
+			return (ret);
 		putnbr(signe_i * opt.conv, &ret);
+	}
 	return (ret);
 }
 
