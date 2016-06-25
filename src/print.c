@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/30 14:49:10 by jcazako           #+#    #+#             */
-/*   Updated: 2016/06/25 20:06:43 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/06/25 21:42:34 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,13 @@ int	print(t_opt opt)
 		{
 			while (i++ < opt.width - 1)
 			{
-				if (!opt.pres_on)
-					ft_putchar(' ');
+				if (!opt.attri.zero)
+				{
+					if (!opt.pres_on)
+						ft_putchar(' ');
+					else
+						ft_putchar('0');
+				}
 				else
 					ft_putchar('0');
 			}

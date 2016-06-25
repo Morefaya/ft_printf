@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/11 13:30:19 by jcazako           #+#    #+#             */
-/*   Updated: 2016/06/25 17:46:32 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/06/25 22:00:34 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ static int	print_choice(t_opt opt)
 	{
 		if (!opt.conv && opt.pres_on && !opt.presi)
 			return (0);
+		//ft_putchar('%');
 		putlun_nbr(opt.conv, opt, &ret);
 	}
 	else if (ft_check_charset(opt.type, "xX"))
