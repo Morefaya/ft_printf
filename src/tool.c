@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 20:55:52 by jcazako           #+#    #+#             */
-/*   Updated: 2016/06/25 17:15:03 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/06/27 20:10:05 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ int		print_prefix(t_opt opt, int cond)
 		}
 		return (2);
 	}
-	else
-		print_zero_left(opt, 0);
+	//else
+	//	print_zero_left(opt, 0);
 	/*
 	else if (opt.type == 'o' && !print_zero_left(opt, 0) && opt.attri.diez)
 	{

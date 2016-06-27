@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/11 13:30:19 by jcazako           #+#    #+#             */
-/*   Updated: 2016/06/25 22:00:34 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/06/27 21:46:52 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,13 @@ int			print_zero_left(t_opt opt, int cond)
 	}
 	else
 		size = opt.presi - size_base(opt);
+	if (opt.type == 'p' && opt.attri.zero && opt.width)
+		size -= 2;
+	else if ((ft_check_charset(opt.type, "diD")
+			&& opt.attri.moins && opt.attri.zero)
+			|| (ft_check_charset(opt.type, "diD")
+			&& opt.attri.plus && opt.attri.zero && opt.conv))
+		size--;
 	deal_zero(&size, &ret, cond);
 	if (!ret && opt.attri.diez && ft_check_charset(opt.type, "oO"))
 	{
@@ -57,6 +64,7 @@ static int	print_space_right(t_opt opt, int ret_p)
 
 	ret = 0;
 	size = opt.width - ret_p;
+
 	while (size > 0)
 	{
 		ft_putchar(' ');
@@ -86,7 +94,6 @@ static int	print_choice(t_opt opt)
 	{
 		if (!opt.conv && opt.pres_on && !opt.presi)
 			return (0);
-		//ft_putchar('%');
 		putlun_nbr(opt.conv, opt, &ret);
 	}
 	else if (ft_check_charset(opt.type, "xX"))
@@ -96,7 +103,11 @@ static int	print_choice(t_opt opt)
 		putlun_nbr(opt.conv, opt, &ret);
 	}
 	else if (opt.type == 'o' || opt.type == 'O')
+	{
+		if (!opt.conv && opt.pres_on && !opt.attri.diez)
+			return (0);
 		putlun_nbr(opt.conv, opt, &ret);
+	}
 	else
 	{
 		if (!opt.conv && !opt.presi)

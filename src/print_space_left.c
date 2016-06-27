@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/21 20:03:08 by jcazako           #+#    #+#             */
-/*   Updated: 2016/05/17 21:07:41 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/06/27 21:31:49 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,11 @@ int			print_space_left(t_opt opt)
 			ret++;
 			size--;
 		}
+	}
+	else if (opt.attri.space && ft_check_charset(opt.type, "diD"))
+	{
+		ft_putchar(' ');
+		ret++;
 	}
 	deal_opt(opt, &ret);
 	return (ret);
