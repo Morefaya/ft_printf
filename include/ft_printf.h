@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/05 14:25:50 by jcazako           #+#    #+#             */
-/*   Updated: 2016/06/25 17:30:17 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/06/28 12:10:21 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,5 +91,8 @@ void				bzero_attr(t_opt *opt);
 void				bzero_opt(t_opt *opt);
 int					print(t_opt opt);
 void				putnbr(int nbr, int *ret);
+
+void				putstr_pres(t_opt opt, int *ret, int cond);
+
 int					ft_printf(const char *format, ...);
 #endif

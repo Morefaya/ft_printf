@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/21 20:03:08 by jcazako           #+#    #+#             */
-/*   Updated: 2016/06/27 21:31:49 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/06/28 16:39:54 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,14 @@ int			print_space_left(t_opt opt)
 	if ((!opt.attri.moins && opt.presi)
 			|| (!opt.attri.moins && !opt.attri.zero && !opt.presi))
 	{
+		if (opt.pres_on && !opt.conv && !opt.attri.diez
+			&& ft_check_charset(opt.type, "odx") && opt.width && !opt.attri.zero)
+		{
+			ret++;
+			ft_putchar(' ');
+		}
+		if (ft_check_charset(opt.type, "oO") && opt.attri.diez && opt.width)
+			size--;
 		while (size > 0)
 		{
 			ft_putchar(' ');

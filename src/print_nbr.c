@@ -6,14 +6,27 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/11 13:30:19 by jcazako           #+#    #+#             */
-/*   Updated: 2016/06/27 21:46:52 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/06/28 22:45:17 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void	deal_zero(int *size, int *ret, int cond)
+static void	deal_zero(t_opt opt, int *size, int *ret, int cond)
 {
+	//int	signe_i;
+	//int	aff = 0;
+
+	//signe_i = ((int)opt.conv < 0) ? -1 : 1;
+	if (opt.attri.moins && opt.attri.zero && opt.conv)
+		return ;
+	else if (opt.attri.moins && opt.attri.diez && opt.attri.zero)
+		return ;
+	/*if ((int)opt.conv < 0)
+		putnbr(signe_i * opt.conv, &aff);*/
+	if (ft_check_charset(opt.type, "dD") && opt.attri.plus
+		&& opt.attri.zero && opt.width && (int)opt.conv < 0)
+		(*size)++;
 	while (*size > 0)
 	{
 		if (cond)
@@ -38,14 +51,20 @@ int			print_zero_left(t_opt opt, int cond)
 	}
 	else
 		size = opt.presi - size_base(opt);
-	if (opt.type == 'p' && opt.attri.zero && opt.width)
+	if ((opt.type == 'p' && opt.attri.zero && opt.width))
 		size -= 2;
 	else if ((ft_check_charset(opt.type, "diD")
-			&& opt.attri.moins && opt.attri.zero)
-			|| (ft_check_charset(opt.type, "diD")
-			&& opt.attri.plus && opt.attri.zero && opt.conv))
+		&& opt.attri.moins && opt.attri.zero)
+		|| (ft_check_charset(opt.type, "diD")
+		&& opt.attri.plus && opt.attri.zero && opt.conv))
 		size--;
-	deal_zero(&size, &ret, cond);
+	else if (ft_check_charset(opt.type, "xX") && opt.attri.zero && opt.attri.diez)
+		size -= 2;
+	/*if ((opt.type == 'd' && opt.attri.plus && opt.attri.zero && size)
+		||
+		)
+		size--;*/
+	deal_zero(opt, &size, &ret, cond);
 	if (!ret && opt.attri.diez && ft_check_charset(opt.type, "oO"))
 	{
 		if (cond && opt.conv)
@@ -84,7 +103,7 @@ static int	print_choice(t_opt opt)
 	signe_i = ((int)opt.conv < 0) ? -1 : 1;
 	ret = 0;
 	if (opt.type == 'D' || (ft_check_charset(opt.type, "id")
-				&& ft_check_charset(opt.m_len, "lLjz")))
+		&& ft_check_charset(opt.m_len, "lLjz")))
 		putlong_nbr(signe_l * opt.conv, &ret);
 	else if (ft_check_charset(opt.type, "di") && opt.m_len == 'h')
 		putshort_nbr(opt.conv, &ret);
@@ -110,7 +129,7 @@ static int	print_choice(t_opt opt)
 	}
 	else
 	{
-		if (!opt.conv && !opt.presi)
+		if ((!opt.conv && opt.pres_on && !opt.presi))
 			return (ret);
 		putnbr(signe_i * opt.conv, &ret);
 	}

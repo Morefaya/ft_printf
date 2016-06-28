@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/11 14:44:38 by jcazako           #+#    #+#             */
-/*   Updated: 2016/06/25 21:57:02 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/06/28 12:15:11 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	print_space(t_opt opt, int *ret)
 		if (ft_check_charset(opt.type, "SC") && opt.conv)
 			size = putlong_str(opt, 0);
 		else if (opt.conv)
-			size = ft_strlen((char*)opt.conv);
+			putstr_pres(opt, &size, 0);
 		i = opt.width - size;
 	}
 	while (i-- > 0)
@@ -79,12 +79,13 @@ int			print_str(t_opt opt)
 	if (!opt.attri.moins)
 		print_space(opt, &ret);
 	if (opt.type == 'S' || (opt.type == 's' && opt.m_len == 'l'))
-		ret += putlong_str(opt, 1);
-	else
 	{
-		ft_putstr((char*)opt.conv);
-		ret += ft_strlen((const char*)opt.conv);
+		if (opt.pres_on)
+			return (-1);
+		ret += putlong_str(opt, 1);
 	}
+	else
+		putstr_pres(opt, &ret, 1);
 	if (opt.attri.moins)
 		print_space(opt, &ret);
 	return (ret);
