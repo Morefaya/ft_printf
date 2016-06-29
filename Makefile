@@ -6,7 +6,7 @@ size_base.c putlong_char.c putlong_nbr.c putlun_nbr.c putshort_nbr.c putchar_nbr
 print_space_left.c parse_modifier.c atoi_base.c putint_base.c tool.c szb.c bzero.c \
 ft_putchar.c ft_putstr.c ft_atoi.c ft_check_charset.c ft_pow.c putnbr.c \
 ft_size_base.c ft_strchr.c ft_strlen.c ft_chisdigit.c ft_strcmp.c print.c \
-putlong_base.c putstr_pres.c
+putlong_base.c putstr_pres.c print_zero_left.c print_choice.c
 SRC_DIR = ./src
 SRC_C = $(patsubst %, $(SRC_DIR)/%, $(SRC))
 OBJ = $(patsubst %.c, %.o, $(SRC))

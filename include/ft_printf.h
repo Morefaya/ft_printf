@@ -93,6 +93,7 @@ int					print(t_opt opt);
 void				putnbr(int nbr, int *ret);
 
 void				putstr_pres(t_opt opt, int *ret, int cond);
+int				print_choice(t_opt opt);
 
 int					ft_printf(const char *format, ...);
 #endif

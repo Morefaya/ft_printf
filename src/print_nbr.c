@@ -12,18 +12,12 @@
 
 #include "ft_printf.h"
 
-static void	deal_zero(t_opt opt, int *size, int *ret, int cond)
+/*static void	deal_zero(t_opt opt, int *size, int *ret, int cond)
 {
-	//int	signe_i;
-	//int	aff = 0;
-
-	//signe_i = ((int)opt.conv < 0) ? -1 : 1;
 	if (opt.attri.moins && opt.attri.zero && opt.conv)
 		return ;
 	else if (opt.attri.moins && opt.attri.diez && opt.attri.zero)
 		return ;
-	/*if ((int)opt.conv < 0)
-		putnbr(signe_i * opt.conv, &aff);*/
 	if (ft_check_charset(opt.type, "dD") && opt.attri.plus
 		&& opt.attri.zero && opt.width && (int)opt.conv < 0)
 		(*size)++;
@@ -42,8 +36,7 @@ int			print_zero_left(t_opt opt, int cond)
 	int	ret;
 
 	ret = 0;
-	if (opt.attri.zero && !opt.presi && opt.width > opt.presi)
-	//if (opt.attri.zero && !opt.presi && opt.width)
+	if (opt.attri.zero && !opt.pres_on && opt.width)
 	{
 		size = opt.width - size_base(opt);
 		if (check_signe_moins(opt) == -1)
@@ -58,12 +51,17 @@ int			print_zero_left(t_opt opt, int cond)
 		|| (ft_check_charset(opt.type, "diD")
 		&& opt.attri.plus && opt.attri.zero && opt.conv))
 		size--;
-	else if (ft_check_charset(opt.type, "xX") && opt.attri.zero && opt.attri.diez)
+	else if (ft_check_charset(opt.type, "xX")
+		&& opt.attri.zero && opt.attri.diez)
 		size -= 2;
-	/*if ((opt.type == 'd' && opt.attri.plus && opt.attri.zero && size)
-		||
-		)
-		size--;*/
+	if (ft_check_charset(opt.type, "dDi") && opt.attri.zero && !opt.attri.diez
+		&& opt.width && !opt.pres_on && !opt.presi && !opt.conv)
+	{
+		if ((opt.attri.plus && !opt.attri.space && !opt.attri.moins)
+			|| (!opt.attri.plus && opt.attri.space && !opt.attri.moins)
+			|| (!opt.attri.plus && !opt.attri.space && opt.attri.moins))
+			size--;
+	}
 	deal_zero(opt, &size, &ret, cond);
 	if (!ret && opt.attri.diez && ft_check_charset(opt.type, "oO"))
 	{
@@ -74,7 +72,7 @@ int			print_zero_left(t_opt opt, int cond)
 		}
 	}
 	return (ret);
-}
+}*/
 
 static int	print_space_right(t_opt opt, int ret_p)
 {
@@ -92,8 +90,8 @@ static int	print_space_right(t_opt opt, int ret_p)
 	}
 	return (ret);
 }
-
-static int	print_choice(t_opt opt)
+/*
+int	print_choice(t_opt opt)
 {
 	int	ret;
 	int	signe_l;
@@ -134,7 +132,7 @@ static int	print_choice(t_opt opt)
 		putnbr(signe_i * opt.conv, &ret);
 	}
 	return (ret);
-}
+}*/
 
 int			print_nbr(t_opt opt)
 {

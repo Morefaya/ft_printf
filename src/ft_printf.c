@@ -121,6 +121,13 @@ static void	deal_percent(const char **format, va_list ap, int *ret)
 	}
 }
 
+static void	write_str(const char **format, char *next_prc, int *ret)
+{
+	write(1, *format, next_prc - *format);
+	(*ret) += next_prc - *format;
+	(*format) += next_prc - *format + 1;
+}
+
 int			ft_printf(const char *format, ...)
 {
 	char	*next_prc;
@@ -134,16 +141,17 @@ int			ft_printf(const char *format, ...)
 	while (*format)
 	{
 		if ((next_prc = ft_strchr(format, '%')))
-		{
+			write_str(&format, next_prc, &ret);
+		/*{
 			write(1, format, next_prc - format);
 			ret += next_prc - format;
 			format += next_prc - format + 1;
-		}
+		}*/
 		else
 		{
 			ft_putstr(format);
 			ret += ft_strlen(format);
-			format += ft_strlen(format) + 1;
+			//format += ft_strlen(format) + 1;
 			break ;
 		}
 		deal_percent(&format, ap, &ret);
