@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 21:09:43 by jcazako           #+#    #+#             */
-/*   Updated: 2016/05/17 21:10:22 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/06/30 17:03:47 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static unsigned long	check_base(t_opt opt)
 		return (10);
 }
 
-void			putlun_nbr(unsigned long nbr, t_opt opt, int *ret)
+void					putlun_nbr(unsigned long nbr, t_opt opt, int *ret)
 {
 	unsigned long	base;
 	char			*base_set;

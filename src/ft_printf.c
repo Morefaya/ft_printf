@@ -6,18 +6,14 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/27 18:48:08 by jcazako           #+#    #+#             */
-/*   Updated: 2016/06/27 18:04:16 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/06/30 16:18:42 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdio.h>
 #include <unistd.h>
-#include <locale.h>
-#include <wchar.h>
-#include <inttypes.h>
 
-static int	get_conv(const char **format, va_list ap, t_opt *opt)
+int			get_conv(const char **format, va_list ap, t_opt *opt)
 {
 	int	i;
 
@@ -31,7 +27,7 @@ static int	get_conv(const char **format, va_list ap, t_opt *opt)
 	return (0);
 }
 
-static void	modify_len(t_opt *opt)
+void		modify_len(t_opt *opt)
 {
 	if (ft_check_charset(opt->type, CONV))
 	{
@@ -45,68 +41,6 @@ static void	modify_len(t_opt *opt)
 		else
 			opt->conv &= opt->conv & 0x00000000ffffffff;
 	}
-}
-
-static int	print_var(const char **format, va_list ap)
-{
-	int		ret;
-	t_opt	opt;
-	int	conv;
-	int		i;
-
-	bzero_opt(&opt);
-	conv = 0;
-	i = 0;
-	while (!ft_check_charset(**format, CONV))
-	{
-		ret = 0;
-		if (parse_attr(format, &(opt.attri)))
-			ret = 1;
-		if (parse_width(format, &opt))
-			ret = 1;
-		if (parse_pres(format, &opt))
-			ret = 1;
-		if (ft_check_charset(**format, "lhjz"))
-		{
-			if (parse_modifier(format, &opt))
-				ret = 1;
-		}
-		if (!ret)
-			break ;
-	}
-	if (!(conv = get_conv(format, ap, &opt)))
-	{
-		if (opt.width && !opt.attri.moins)
-		{
-			while (i++ < opt.width - 1)
-			{
-				if (!opt.pres_on)
-					ft_putchar(' ');
-				else
-					ft_putchar('0');
-			}
-			ret += --i;
-		}
-		ft_putchar(**format);
-		if (opt.width && opt.attri.moins)
-		{
-			while (i++ < opt.width - 1)
-			{
-				if (!opt.pres_on)
-					ft_putchar(' ');
-				else
-					ft_putchar('0');
-			}
-			ret += --i;
-		}
-		ret++;
-		(*format)++;
-		return (ret);
-	}
-	modify_len(&opt);
-	ret = print(opt);
-	(*format)++;
-	return (ret);
 }
 
 static void	deal_percent(const char **format, va_list ap, int *ret)
@@ -142,16 +76,10 @@ int			ft_printf(const char *format, ...)
 	{
 		if ((next_prc = ft_strchr(format, '%')))
 			write_str(&format, next_prc, &ret);
-		/*{
-			write(1, format, next_prc - format);
-			ret += next_prc - format;
-			format += next_prc - format + 1;
-		}*/
 		else
 		{
 			ft_putstr(format);
 			ret += ft_strlen(format);
-			//format += ft_strlen(format) + 1;
 			break ;
 		}
 		deal_percent(&format, ap, &ret);

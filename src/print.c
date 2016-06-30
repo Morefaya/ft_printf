@@ -6,13 +6,53 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/30 14:49:10 by jcazako           #+#    #+#             */
-/*   Updated: 2016/06/28 16:24:41 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/06/30 16:29:22 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	print(t_opt opt)
+static void	print_after(t_opt opt, int *i, int *ret)
+{
+	if (opt.width && opt.attri.moins)
+	{
+		while ((*i)++ < opt.width - 1)
+		{
+			if (!opt.attri.zero)
+			{
+				if (!opt.pres_on)
+					ft_putchar(' ');
+				else
+					ft_putchar('0');
+			}
+			else
+				ft_putchar('0');
+		}
+		(*ret) += --(*i);
+	}
+}
+
+static void	print_before(t_opt opt, int *i, int *ret)
+{
+	if (opt.width && !opt.attri.moins)
+	{
+		while ((*i)++ < opt.width - 1)
+		{
+			if (!opt.attri.zero)
+			{
+				if (!opt.pres_on)
+					ft_putchar(' ');
+				else
+					ft_putchar('0');
+			}
+			else
+				ft_putchar('0');
+		}
+		(*ret) += --(*i);
+	}
+}
+
+int			print(t_opt opt)
 {
 	int		ret;
 	int		i;
@@ -33,39 +73,9 @@ int	print(t_opt opt)
 	}
 	else if (opt.type == 'c' || opt.type == 'C')
 	{
-		if (opt.width && !opt.attri.moins)
-		{
-			while (i++ < opt.width - 1)
-			{
-				if (!opt.attri.zero)
-				{
-					if (!opt.pres_on)
-						ft_putchar(' ');
-					else
-						ft_putchar('0');
-				}
-				else
-					ft_putchar('0');
-			}
-			ret += --i;
-		}
+		print_before(opt, &i, &ret);
 		ret += putlong_char(opt, 1);
-		if (opt.width && opt.attri.moins)
-		{
-			while (i++ < opt.width - 1)
-			{
-				if (!opt.attri.zero)
-				{
-					if (!opt.pres_on)
-						ft_putchar(' ');
-					else
-						ft_putchar('0');
-				}
-				else
-					ft_putchar('0');
-			}
-			ret += --i;
-		}
+		print_after(opt, &i, &ret);
 	}
 	return (ret);
 }

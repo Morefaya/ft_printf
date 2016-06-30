@@ -1,4 +1,14 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   putlong_base.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/06/30 17:02:32 by jcazako           #+#    #+#             */
+/*   Updated: 2016/06/30 17:02:43 by jcazako          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "ft_printf.h"
 
@@ -15,7 +25,7 @@ static long	check_base(t_opt opt)
 void		putlong_base(long nbr, t_opt opt, int *ret)
 {
 	unsigned long	base;
-	char	*base_set;
+	char			*base_set;
 	unsigned long	n;
 
 	base = check_base(opt);

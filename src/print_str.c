@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/11 14:44:38 by jcazako           #+#    #+#             */
-/*   Updated: 2016/06/28 12:15:11 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/06/30 16:38:22 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,24 @@ static void	print_space(t_opt opt, int *ret)
 	{
 		if (!opt.attri.zero)
 			ft_putchar(' ');
-		else 
+		else
 			ft_putchar('0');
 		(*ret)++;
+	}
+}
+
+static int	deal_null(t_opt opt, int *i)
+{
+	if (opt.attri.zero)
+	{
+		while ((*i)++ < opt.width)
+			ft_putchar('0');
+		return (opt.width);
+	}
+	else
+	{
+		ft_putstr("(null)");
+		return (6);
 	}
 }
 
@@ -63,19 +78,7 @@ int			print_str(t_opt opt)
 	ret = 0;
 	i = 0;
 	if (!opt.conv)
-	{
-		if (opt.attri.zero)
-		{
-			while (i++ < opt.width)
-				ft_putchar('0');
-			return (opt.width);
-		}
-		else
-		{
-			ft_putstr("(null)");
-			return (6);
-		}
-	}
+		return (deal_null(opt, &i));
 	if (!opt.attri.moins)
 		print_space(opt, &ret);
 	if (opt.type == 'S' || (opt.type == 's' && opt.m_len == 'l'))

@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   print_zero_left.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/06/30 17:04:01 by jcazako           #+#    #+#             */
+/*   Updated: 2016/06/30 17:05:27 by jcazako          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
-static void     deal_zero(t_opt opt, int *size, int *ret, int cond)
+static void		deal_zero(t_opt opt, int *size, int *ret, int cond)
 {
 	if (opt.attri.moins && opt.attri.zero && opt.conv)
 		return ;
@@ -18,7 +30,7 @@ static void     deal_zero(t_opt opt, int *size, int *ret, int cond)
 	}
 }
 
-static void	help_norme(t_opt opt, int *size)
+static void		help_norme(t_opt opt, int *size)
 {
 	if (opt.attri.zero && !opt.pres_on && opt.width)
 	{
@@ -40,7 +52,7 @@ static void	help_norme(t_opt opt, int *size)
 		(*size) -= 2;
 }
 
-int			print_zero_left(t_opt opt, int cond)
+int				print_zero_left(t_opt opt, int cond)
 {
 	int	size;
 	int	ret;

@@ -6,7 +6,7 @@
 /*   By: jcazako <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 21:43:04 by jcazako           #+#    #+#             */
-/*   Updated: 2016/06/27 16:56:29 by jcazako          ###   ########.fr       */
+/*   Updated: 2016/06/30 17:04:55 by jcazako          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,6 @@ int			putlong_char(t_opt opt, int cond)
 	}
 	else if (opt.type == 'C' || opt.type == 'S'
 		|| (opt.type == 'c' && opt.m_len == 'l'))
-		return(deal_c(mask, opt, cond));
+		return (deal_c(mask, opt, cond));
 	return (0);
 }
